@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#0d0e11] text-gray-200 antialiased;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-[#16181d] border border-[#2a2d34] rounded-xl shadow-md;
+  }
+  .card-hover {
+    @apply hover:bg-[#1b1d22] transition-all duration-200;
+  }
+}

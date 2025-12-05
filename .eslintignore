@@ -1,0 +1,8 @@
+tailwind.config.js
+node_modules
+.nuxt
+.output
+dist
+coverage
+*.d.ts
+tailwind.config.js

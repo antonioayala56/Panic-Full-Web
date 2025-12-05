@@ -1,0 +1,53 @@
+/* assets/css/theme-future.css */
+
+:root {
+  --c-bg: #1a0a0a;
+  --c-bg-soft: #2a1414;
+  --c-bg-card: #3a1a1a;
+
+  --c-primary: #f59e0b;
+  --c-primary-glow: #fbbf24;
+
+  --c-secondary: #ef4444;
+  --c-secondary-glow: #f87171;
+
+  --c-border: #4a2525;
+  --c-text: #fef2f2;
+}
+
+body {
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: 'Inter', sans-serif;
+}
+
+.neon-border {
+  border: 1px solid var(--c-primary);
+  box-shadow:
+    0 0 10px var(--c-primary-glow),
+    inset 0 0 10px var(--c-primary);
+}
+
+.btn-glow {
+  transition: 0.25s ease;
+}
+
+.btn-glow:hover {
+  box-shadow:
+    0 0 12px var(--c-primary-glow),
+    0 0 25px var(--c-primary-glow);
+}
+
+.card-pro {
+  background: var(--c-bg-card);
+  border-radius: 18px;
+  padding: 18px;
+  border: 1px solid var(--c-border);
+  backdrop-filter: blur(8px);
+  transition: 0.25s ease;
+}
+
+.card-pro:hover {
+  border-color: var(--c-primary);
+  box-shadow: 0 0 20px var(--c-primary-glow);
+}

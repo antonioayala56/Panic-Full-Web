@@ -1,0 +1,732 @@
+[
+  {
+    "code": "Mic1",
+    "component": "Micrófono inferior / Barómetro (en flex de carga)",
+    "models": ["XS", "XS Max", "XR", "11", "11 Pro", "11 Pro Max", "12", "12 Mini", "12 Pro", "12 Pro Max"],
+    "certainty": 92,
+    "status": "confirmado",
+    "severity": "high",
+    "solution": "Sustituir flex de puerto de carga OEM; inspeccionar FPC, corrosión y líneas I²C del barómetro.",
+    "type": "text",
+    "notes": "Missing sensor(s): mic1. Reinicios ~3 min."
+  },
+  {
+    "code": "Prs0",
+    "component": "Barómetro (en flex de carga)",
+    "models": ["XS", "XS Max", "XR", "11", "11 Pro", "11 Pro Max", "12", "12 Mini", "12 Pro", "12 Pro Max"],
+    "certainty": 92,
+    "status": "confirmado",
+    "severity": "high",
+    "solution": "Cambiar flex del dock con barómetro; revisar respiradero/ducto, sellos y continuidad de I²C.",
+    "type": "text"
+  },
+  {
+    "code": "Mic2",
+    "component": "Mic cancelación trasero / Flex botón Power",
+    "models": ["XS", "XS Max", "XR", "11", "11 Pro", "11 Pro Max", "12", "12 Mini", "12 Pro", "12 Pro Max"],
+    "certainty": 88,
+    "status": "confirmado",
+    "severity": "medium",
+    "solution": "Probar flex Power/Flash OEM. En iPhone 11 común revisar unión de placas/interposer.",
+    "type": "text"
+  },
+  {
+    "code": "TG0B",
+    "component": "Telemetría de batería (termistor/BMS)",
+    "models": ["XS", "XS Max", "XR", "11", "11 Pro", "11 Pro Max", "12", "12 Mini", "12 Pro", "12 Pro Max"],
+    "certainty": 86,
+    "status": "confirmado",
+    "severity": "high",
+    "solution": "Cambiar batería OEM; limpiar pines; revisar SDA/SCL hacia gas gauge y PMIC de carga.",
+    "type": "text"
+  },
+  {
+    "code": "TG0V",
+    "component": "Voltaje/telemetría de batería (BMS)",
+    "models": ["XS", "XS Max", "XR", "11", "11 Pro", "11 Pro Max", "12", "12 Mini", "12 Pro", "12 Pro Max"],
+    "certainty": 86,
+    "status": "confirmado",
+    "severity": "high",
+    "solution": "Idem TG0B. Confirmar lecturas con batería conocida.",
+    "type": "text"
+  },
+  {
+    "code": "ANS2",
+    "component": "NAND / controlador NVMe",
+    "models": [
+      "XS", "XS Max", "XR",
+      "11", "11 Pro", "11 Pro Max",
+      "12", "12 Mini", "12 Pro", "12 Pro Max",
+      "13", "13 Mini", "13 Pro", "13 Pro Max",
+      "14", "14 Plus", "14 Pro", "14 Pro Max",
+      "15", "15 Plus", "15 Pro", "15 Pro Max",
+      "16", "16 Plus", "16 Pro", "16 Pro Max"
+    ],
+    "certainty": 82,
+    "status": "corroborar",
+    "severity": "critical",
+    "solution": "DFU/restore; si persiste, diagnóstico bus PCIe/NAND (posible micro-soldadura).",
+    "type": "text"
+  },
+  {
+    "code": "nvme",
+    "component": "Bus NVMe (almacenamiento)",
+    "models": [
+      "XS", "XS Max", "XR",
+      "11", "11 Pro", "11 Pro Max",
+      "12", "12 Mini", "12 Pro", "12 Pro Max",
+      "13", "13 Mini", "13 Pro", "13 Pro Max",
+      "14", "14 Plus", "14 Pro", "14 Pro Max",
+      "15", "15 Plus", "15 Pro", "15 Pro Max",
+      "16", "16 Plus", "16 Pro", "16 Pro Max"
+    ],
+    "certainty": 80,
+    "status": "corroborar",
+    "severity": "critical",
+    "solution": "Revisar soldadura NAND, vías, continuidad (más crítico en modelos sandwich).",
+    "type": "text"
+  },
+  {
+    "code": "apcie",
+    "component": "Interfaz PCIe a NAND",
+    "models": [
+      "XS", "XS Max", "XR",
+      "11", "11 Pro", "11 Pro Max",
+      "12", "12 Mini", "12 Pro", "12 Pro Max",
+      "13", "13 Mini", "13 Pro", "13 Pro Max",
+      "14", "14 Plus", "14 Pro", "14 Pro Max",
+      "15", "15 Plus", "15 Pro", "15 Pro Max",
+      "16", "16 Plus", "16 Pro", "16 Pro Max"
+    ],
+    "certainty": 80,
+    "status": "corroborar",
+    "severity": "critical",
+    "solution": "Comprobación líneas PCIe; inspección bajo microscopio; posible reball/sustitución NAND.",
+    "type": "text"
+  },
+  {
+    "code": "AOP PANIC",
+    "component": "Always-On Processor / periféricos asociados",
+    "models": [
+      "XS", "XS Max", "XR",
+      "11", "11 Pro", "11 Pro Max",
+      "12", "12 Mini", "12 Pro", "12 Pro Max",
+      "13", "13 Mini", "13 Pro", "13 Pro Max",
+      "14", "14 Plus", "14 Pro", "14 Pro Max",
+      "15", "15 Plus", "15 Pro", "15 Pro Max",
+      "16", "16 Plus", "16 Pro", "16 Pro Max"
+    ],
+    "certainty": 65,
+    "status": "corroborar",
+    "severity": "medium",
+    "solution": "Revisar pistas del panicString. Probar flex Power, dock/barómetro, Taptic/audio.",
+    "type": "text"
+  },
+  {
+    "code": "Kernel data abort",
+    "component": "CPU/SoC o railes de alimentación CPU",
+    "models": [
+      "XS","XS Max","XR",
+      "11","11 Pro","11 Pro Max",
+      "12","12 Mini","12 Pro","12 Pro Max",
+      "13","13 Mini","13 Pro","13 Pro Max",
+      "14","14 Plus","14 Pro","14 Pro Max",
+      "15","15 Plus","15 Pro","15 Pro Max",
+      "16","16 Plus","16 Pro","16 Pro Max"
+    ],
+    "certainty": 60,
+    "status": "corroborar",
+    "severity": "critical",
+    "solution": "Descartar periféricos; revisar CPU/PM y deformación de placa.",
+    "type": "text"
+  },
+  {
+    "code": "i2c0",
+    "component": "Bus I²C general",
+    "models": [
+      "XS","XS Max","XR",
+      "11","11 Pro","11 Pro Max",
+      "12","12 Mini","12 Pro","12 Pro Max",
+      "13","13 Mini","13 Pro","13 Pro Max",
+      "14","14 Plus","14 Pro","14 Pro Max",
+      "15","15 Plus","15 Pro","15 Pro Max",
+      "16","16 Plus","16 Pro","16 Pro Max"
+    ],
+    "certainty": 58,
+    "status": "corroborar",
+    "severity": "medium",
+    "solution": "Cruzar con esquemas: identificar sensores/IC afectados.",
+    "type": "text"
+  },
+  {
+    "code": "i2c1",
+    "component": "Bus I²C secundario",
+    "models": [
+      "XS","XS Max","XR",
+      "11","11 Pro","11 Pro Max",
+      "12","12 Mini","12 Pro","12 Pro Max",
+      "13","13 Mini","13 Pro","13 Pro Max",
+      "14","14 Plus","14 Pro","14 Pro Max",
+      "15","15 Plus","15 Pro","15 Pro Max",
+      "16","16 Plus","16 Pro","16 Pro Max"
+    ],
+    "certainty": 58,
+    "status": "corroborar",
+    "severity": "medium",
+    "solution": "Idem i2c0.",
+    "type": "text"
+  },
+  {
+    "code": "i2c2",
+    "component": "I²C sensores frontales/audio",
+    "models": [
+      "XS","XS Max","XR","11","11 Pro","11 Pro Max",
+      "12","12 Mini","12 Pro","12 Pro Max"
+    ],
+    "certainty": 62,
+    "status": "corroborar",
+    "severity": "medium",
+    "solution": "Revisar FaceID, sensores frontales y módulos de audio.",
+    "type": "text"
+  },
+  {
+    "code": "Sleep/Wake hang detected",
+    "component": "Gestión de energía / Audio / Wi-Fi",
+    "models": [
+      "XS","XS Max","XR",
+      "11","11 Pro","11 Pro Max",
+      "12","12 Mini","12 Pro","12 Pro Max",
+      "13","13 Mini","13 Pro","13 Pro Max",
+      "14","14 Plus","14 Pro","14 Pro Max",
+      "15","15 Plus","15 Pro","15 Pro Max",
+      "16","16 Plus","16 Pro","16 Pro Max"
+    ],
+    "certainty": 55,
+    "status": "corroborar",
+    "severity": "medium",
+    "solution": "Revisar audio/Wi-Fi, railes PM y descartar software.",
+    "type": "text"
+  },
+  {
+    "code": "Dart-disp0 SMMU error",
+    "component": "Pantalla/ISP/Cámara (bus MIPI/DART)",
+    "models": [
+      "XS","XS Max","XR",
+      "11","11 Pro","11 Pro Max",
+      "12","12 Mini","12 Pro","12 Pro Max",
+      "13","13 Mini","13 Pro","13 Pro Max",
+      "14","14 Plus","14 Pro","14 Pro Max",
+      "15","15 Plus","15 Pro","15 Pro Max",
+      "16","16 Plus","16 Pro","16 Pro Max"
+    ],
+    "certainty": 68,
+    "status": "corroborar",
+    "severity": "high",
+    "solution": "Probar cámaras, conectores/cintas y líneas MIPI.",
+    "type": "text"
+  },
+  {
+    "code": "AppleBCMWLAN",
+    "component": "Wi-Fi/Bluetooth (Broadcom)",
+    "models": [
+      "XS","XS Max","XR",
+      "11","11 Pro","11 Pro Max",
+      "12","12 Mini","12 Pro","12 Pro Max",
+      "13","13 Mini","13 Pro","13 Pro Max",
+      "14","14 Plus","14 Pro","14 Pro Max",
+      "15","15 Plus","15 Pro","15 Pro Max",
+      "16","16 Plus","16 Pro","16 Pro Max"
+    ],
+    "certainty": 70,
+    "status": "corroborar",
+    "severity": "medium",
+    "solution": "Probar antenas/módulo; revisar RF y soldaduras.",
+    "type": "text"
+  },
+  {
+    "code": "0x800",
+    "component": "Flex puerto de carga (dock Lightning)",
+    "models": ["13","13 Mini","13 Pro","13 Pro Max"],
+    "products": ["iPhone14,2","iPhone14,3","iPhone14,4","iPhone14,5"],
+    "certainty": 98,
+    "status": "confirmado",
+    "severity": "high",
+    "solution": "Cambiar dock OEM; verificar mic/barómetro integrados.",
+    "type": "hex"
+  },
+  {
+    "code": "0x1000",
+    "component": "Flex frontal / proximidad (TrueDepth)",
+    "models": ["13","13 Mini","13 Pro","13 Pro Max"],
+    "products": ["iPhone14,2","iPhone14,3","iPhone14,5","iPhone14,4"],
+    "certainty": 90,
+    "status": "confirmado",
+    "severity": "high",
+    "solution": "Reemplazar módulo frontal; revisar clip/FPC.",
+    "type": "hex"
+  },
+  {
+    "code": "0x4000",
+    "component": "BMS/telemetría de batería",
+    "models": ["13","13 Mini","13 Pro","13 Pro Max"],
+    "products": ["iPhone14,2","iPhone14,3","iPhone14,4","iPhone14,5"],
+    "certainty": 95,
+    "status": "confirmado",
+    "severity": "high",
+    "solution": "Cambiar batería; revisar SDA/SCL.",
+    "type": "hex"
+  },
+  {
+    "code": "0x1800",
+    "component": "Combo dock + frontal",
+    "models": ["13","13 Mini","13 Pro","13 Pro Max"],
+    "products": ["iPhone14,2","iPhone14,3","iPhone14,4","iPhone14,5"],
+    "certainty": 100,
+    "status": "confirmado",
+    "severity": "critical",
+    "solution": "Cambiar ambos subconjuntos; probar en etapas.",
+    "type": "hex"
+  },
+  {
+    "code": "0x4800",
+    "component": "Combo batería + dock",
+    "models": ["13","13 Mini","13 Pro","13 Pro Max"],
+    "products": ["iPhone14,2","iPhone14,3","iPhone14,4","iPhone14,5"],
+    "certainty": 100,
+    "status": "confirmado",
+    "severity": "critical",
+    "solution": "Cambiar batería y dock; validar carga.",
+    "type": "hex"
+  },
+  {
+    "code": "0x100000",
+    "component": "Flex puerto de carga",
+    "models": ["14","14 Plus"],
+    "products": ["iPhone14,7","iPhone14,8"],
+    "certainty": 92,
+    "status": "confirmado",
+    "severity": "high",
+    "solution": "Reemplazar dock Lightning.",
+    "type": "hex"
+  },
+  {
+    "code": "0x200000",
+    "component": "Flex frontal / proximidad",
+    "models": ["14","14 Plus"],
+    "products": ["iPhone14,7","iPhone14,8"],
+    "certainty": 85,
+    "status": "confirmado",
+    "severity": "high",
+    "solution": "Cambiar módulo frontal.",
+    "type": "hex"
+  },
+  {
+    "code": "0x400000",
+    "component": "Carga inalámbrica (bobina/NFC)",
+    "models": ["14","14 Plus","15 Pro","15 Pro Max"],
+    "products": ["iPhone14,7","iPhone14,8","iPhone16,1","iPhone16,2"],
+    "certainty": 90,
+    "status": "confirmado",
+    "severity": "medium",
+    "solution": "Cambiar módulo inalámbrico; test Apple Pay.",
+    "type": "hex"
+  },
+  {
+    "code": "0x500000",
+    "component": "Datos de batería (BMS/Taptic)",
+    "models": ["14","14 Plus"],
+    "products": ["iPhone14,7","iPhone14,8"],
+    "certainty": 75,
+    "status": "corroborar",
+    "severity": "medium",
+    "solution": "Probar batería; revisar Taptic.",
+    "type": "hex"
+  },
+  {
+    "code": "0x10000",
+    "component": "Flex botón Power/Flash/Mic superior",
+    "models": ["14 Pro","14 Pro Max"],
+    "products": ["iPhone15,2","iPhone15,3"],
+    "certainty": 90,
+    "status": "confirmado",
+    "severity": "medium",
+    "solution": "Reemplazar flex superior con Power/Flash.",
+    "type": "hex"
+  },
+  {
+    "code": "0x20000",
+    "component": "Unión de placas / interposer (2-layer board)",
+    "models": ["14 Pro","14 Pro Max"],
+    "products": ["iPhone15,2","iPhone15,3"],
+    "certainty": 95,
+    "status": "confirmado",
+    "severity": "critical",
+    "solution": "Reballing del interposer; revisar líneas internas.",
+    "type": "hex"
+  },
+  {
+    "code": "0x40000",
+    "component": "Flex puerto de carga (Lightning)",
+    "models": ["14 Pro","14 Pro Max"],
+    "products": ["iPhone15,2","iPhone15,3"],
+    "certainty": 95,
+    "status": "confirmado",
+    "severity": "high",
+    "solution": "Cambiar dock OEM; validar mic y blindajes.",
+    "type": "hex"
+  },
+  {
+    "code": "0x80000",
+    "component": "Flex frontal / proximidad",
+    "models": ["14 Pro","14 Pro Max"],
+    "products": ["iPhone15,2","iPhone15,3"],
+    "certainty": 95,
+    "status": "confirmado",
+    "severity": "high",
+    "solution": "Cambiar módulo frontal (TrueDepth).",
+    "type": "hex"
+  },
+  {
+    "code": "0x41",
+    "component": "Battery Data Issue (BMS)",
+    "models": ["14 Pro","14 Pro Max"],
+    "products": ["iPhone15,2","iPhone15,3"],
+    "certainty": 70,
+    "status": "corroborar",
+    "severity": "medium",
+    "solution": "Cambiar batería; revisar línea SWI/I2C.",
+    "type": "hex"
+  },
+  {
+    "code": "0x80000",
+    "component": "Flex puerto de carga (USB-C)",
+    "models": ["15","15 Plus"],
+    "products": ["iPhone15,4","iPhone15,5"],
+    "certainty": 95,
+    "status": "confirmado",
+    "severity": "high",
+    "solution": "Reemplazar dock USB-C OEM; revisar mic/barómetro.",
+    "type": "hex"
+  },
+  {
+    "code": "0x100000",
+    "component": "Flex frontal / proximidad",
+    "models": ["15","15 Plus"],
+    "products": ["iPhone15,4","iPhone15,5"],
+    "certainty": 92,
+    "status": "confirmado",
+    "severity": "high",
+    "solution": "Reemplazar FaceID frontal/pantalla OEM.",
+    "type": "hex"
+  },
+  {
+    "code": "0x200000",
+    "component": "Carga inalámbrica (bobina / NFC)",
+    "models": ["15","15 Plus"],
+    "products": ["iPhone15,4","iPhone15,5"],
+    "certainty": 90,
+    "status": "confirmado",
+    "severity": "medium",
+    "solution": "Cambiar flex inalámbrico; validar Apple Pay.",
+    "type": "hex"
+  },
+  {
+    "code": "0x280000",
+    "component": "Combo: inalámbrica + dock",
+    "models": ["15","15 Plus"],
+    "products": ["iPhone15,4","iPhone15,5"],
+    "certainty": 100,
+    "status": "confirmado",
+    "severity": "critical",
+    "solution": "Reemplazar ambos flex; probar carga y NFC.",
+    "type": "hex"
+  },
+  {
+    "code": "0x300000",
+    "component": "Flex puerto de carga (USB-C)",
+    "models": ["15 Pro","15 Pro Max"],
+    "products": ["iPhone16,1","iPhone16,2"],
+    "certainty": 95,
+    "status": "confirmado",
+    "severity": "high",
+    "solution": "Cambiar dock USB-C; revisar líneas CC1/CC2.",
+    "type": "hex"
+  },
+  {
+    "code": "0xa1",
+    "component": "Battery Data Issue (reportes BMS)",
+    "models": ["15 Pro","15 Pro Max"],
+    "products": ["iPhone16,1","iPhone16,2"],
+    "certainty": 70,
+    "status": "corroborar",
+    "severity": "medium",
+    "solution": "Cambiar batería; revisar Tigris y SWI.",
+    "type": "hex"
+  },
+  {
+    "code": "0x310000",
+    "component": "Flex puerto USB-C reforzado",
+    "models": ["16","16 Plus","16 Pro","16 Pro Max"],
+    "products": ["iPhone17,1","iPhone17,2","iPhone17,3","iPhone17,4"],
+    "certainty": 95,
+    "status": "confirmado",
+    "severity": "high",
+    "solution": "Cambiar dock USB-C; revisar líneas eMarker.",
+    "type": "hex"
+  },
+  {
+    "code": "0x410000",
+    "component": "Flex frontal + sensores de ambiente",
+    "models": ["16","16 Plus","16 Pro","16 Pro Max"],
+    "products": ["iPhone17,1","iPhone17,2","iPhone17,3","iPhone17,4"],
+    "certainty": 92,
+    "status": "confirmado",
+    "severity": "high",
+    "solution": "Cambiar módulo frontal completo.",
+    "type": "hex"
+  },
+  {
+    "code": "0x510000",
+    "component": "Sistema inalámbrico (MagSafe 2.0 / NFC)",
+    "models": ["16","16 Plus","16 Pro","16 Pro Max"],
+    "products": ["iPhone17,1","iPhone17,2","iPhone17,3","iPhone17,4"],
+    "certainty": 93,
+    "status": "confirmado",
+    "severity": "medium",
+    "solution": "Cambiar bobina; probar Apple Pay / Qi2.",
+    "type": "hex"
+  },
+  {
+    "code": "0x710000",
+    "component": "Combo dock + bobina + frontal",
+    "models": ["16 Pro","16 Pro Max"],
+    "products": ["iPhone17,3","iPhone17,4"],
+    "certainty": 100,
+    "status": "confirmado",
+    "severity": "critical",
+    "solution": "Reemplazo completo de módulo inferior + bobina + frontal.",
+    "type": "hex"
+  },
+  {
+    "code": "0x610000",
+    "component": "Carga inalámbrica MagSafe 3.0",
+    "models": ["15","15 Plus","15 Pro","15 Pro Max","16","16 Plus","16 Pro","16 Pro Max","17","17 Pro","17 Pro Max"],
+    "certainty": 88,
+    "status": "confirmado",
+    "severity": "medium",
+    "solution": "Reemplazar bobina de carga inalámbrica; verificar chip de control de potencia.",
+    "type": "hex"
+  },
+  {
+    "code": "0x810000",
+    "component": "Audio digital en USB-C",
+    "models": ["15","15 Plus","15 Pro","15 Pro Max","16","16 Plus","16 Pro","16 Pro Max","17","17 Pro","17 Pro Max"],
+    "certainty": 75,
+    "status": "corroborar",
+    "severity": "medium",
+    "solution": "Probar altavoces; verificar codec de audio integrado en USB-C.",
+    "type": "hex"
+  },
+  {
+    "code": "0x12000",
+    "component": "Sensor de proximidad frontal defectuoso",
+    "models": ["XS","XS Max","XR","11","11 Pro","11 Pro Max","12","12 Mini","12 Pro","12 Pro Max","13","13 Mini","13 Pro","13 Pro Max","14","14 Plus","14 Pro","14 Pro Max","15","15 Plus","15 Pro","15 Pro Max","16","16 Plus","16 Pro","16 Pro Max","17","17 Pro","17 Pro Max"],
+    "certainty": 85,
+    "status": "confirmado",
+    "severity": "medium",
+    "solution": "Reemplazar módulo frontal completo; verificar conexiones I2C.",
+    "type": "hex"
+  },
+  {
+    "code": "0x22000",
+    "component": "Flood illuminator / sensor infrarrojo",
+    "models": ["XS","XS Max","XR","11","11 Pro","11 Pro Max","12","12 Mini","12 Pro","12 Pro Max","13","13 Mini","13 Pro","13 Pro Max","14","14 Plus","14 Pro","14 Pro Max","15","15 Plus","15 Pro","15 Pro Max","16","16 Plus","16 Pro","16 Pro Max","17","17 Pro","17 Pro Max"],
+    "certainty": 80,
+    "status": "confirmado",
+    "severity": "high",
+    "solution": "Cambiar módulo TrueDepth; probar Face ID después de reparación.",
+    "type": "hex"
+  },
+  {
+    "code": "0xA10000",
+    "component": "Comunicación I2C con batería",
+    "models": ["13","13 Mini","13 Pro","13 Pro Max","14","14 Plus","14 Pro","14 Pro Max","15","15 Plus","15 Pro","15 Pro Max","16","16 Plus","16 Pro","16 Pro Max","17","17 Pro","17 Pro Max"],
+    "certainty": 90,
+    "status": "confirmado",
+    "severity": "high",
+    "solution": "Reemplazar batería OEM; verificar pines de conexión del flex.",
+    "type": "hex"
+  },
+  {
+    "code": "0xA20000",
+    "component": "Sensor de temperatura BMS",
+    "models": ["13","13 Mini","13 Pro","13 Pro Max","14","14 Plus","14 Pro","14 Pro Max","15","15 Plus","15 Pro","15 Pro Max","16","16 Plus","16 Pro","16 Pro Max","17","17 Pro","17 Pro Max"],
+    "certainty": 75,
+    "status": "corroborar",
+    "severity": "medium",
+    "solution": "Cambiar batería; verificar termistor integrado.",
+    "type": "hex"
+  },
+  {
+    "code": "0xB10000",
+    "component": "Antena WiFi 2.4GHz",
+    "models": ["XS","XS Max","XR","11","11 Pro","11 Pro Max","12","12 Mini","12 Pro","12 Pro Max","13","13 Mini","13 Pro","13 Pro Max","14","14 Plus","14 Pro","14 Pro Max","15","15 Plus","15 Pro","15 Pro Max","16","16 Plus","16 Pro","16 Pro Max","17","17 Pro","17 Pro Max"],
+    "certainty": 70,
+    "status": "corroborar",
+    "severity": "low",
+    "solution": "Probar antenas WiFi; verificar soldaduras y continuidad.",
+    "type": "hex"
+  },
+  {
+    "code": "0xB20000",
+    "component": "Antena WiFi 5GHz",
+    "models": ["XS","XS Max","XR","11","11 Pro","11 Pro Max","12","12 Mini","12 Pro","12 Pro Max","13","13 Mini","13 Pro","13 Pro Max","14","14 Plus","14 Pro","14 Pro Max","15","15 Plus","15 Pro","15 Pro Max","16","16 Plus","16 Pro","16 Pro Max","17","17 Pro","17 Pro Max"],
+    "certainty": 70,
+    "status": "corroborar",
+    "severity": "low",
+    "solution": "Idem antena 2.4GHz; verificar ambas bandas.",
+    "type": "hex"
+  },
+  {
+    "code": "0xC10000",
+    "component": "Controlador MIPI display",
+    "models": ["XS","XS Max","XR","11","11 Pro","11 Pro Max","12","12 Mini","12 Pro","12 Pro Max","13","13 Mini","13 Pro","13 Pro Max","14","14 Plus","14 Pro","14 Pro Max","15","15 Plus","15 Pro","15 Pro Max","16","16 Plus","16 Pro","16 Pro Max","17","17 Pro","17 Pro Max"],
+    "certainty": 85,
+    "status": "confirmado",
+    "severity": "high",
+    "solution": "Reemplazar pantalla completa; verificar flex LCD.",
+    "type": "hex"
+  },
+  {
+    "code": "0xC20000",
+    "component": "Backlight LED array",
+    "models": ["XS","XS Max","XR","11","11 Pro","11 Pro Max","12","12 Mini","12 Pro","12 Pro Max","13","13 Mini","13 Pro","13 Pro Max","14","14 Plus","14 Pro","14 Pro Max","15","15 Plus","15 Pro","15 Pro Max","16","16 Plus","16 Pro","16 Pro Max","17","17 Pro","17 Pro Max"],
+    "certainty": 80,
+    "status": "confirmado",
+    "severity": "medium",
+    "solution": "Cambiar pantalla; verificar controlador de backlight.",
+    "type": "hex"
+  },
+  {
+    "code": "0xC30000",
+    "component": "Touch controller",
+    "models": ["15","15 Plus","15 Pro","15 Pro Max","16","16 Plus","16 Pro","16 Pro Max","17","17 Pro","17 Pro Max"],
+    "certainty": 90,
+    "status": "confirmado",
+    "severity": "high",
+    "solution": "Reemplazar pantalla táctil; verificar conexiones T-CON.",
+    "type": "hex"
+  },
+  {
+    "code": "0xD10000",
+    "component": "Neural Engine / AI accelerator",
+    "models": ["XS","XS Max","XR","11","11 Pro","11 Pro Max","12","12 Mini","12 Pro","12 Pro Max","13","13 Mini","13 Pro","13 Pro Max","14","14 Plus","14 Pro","14 Pro Max","15","15 Plus","15 Pro","15 Pro Max","16","16 Plus","16 Pro","16 Pro Max","17","17 Pro","17 Pro Max"],
+    "certainty": 60,
+    "status": "corroborar",
+    "severity": "medium",
+    "solution": "DFU restore; posible fallo de chip Neural Engine.",
+    "type": "hex"
+  },
+  {
+    "code": "DCP PANIC",
+    "component": "Display Control Processor",
+    "models": ["XS","XS Max","XR","11","11 Pro","11 Pro Max","12","12 Mini","12 Pro","12 Pro Max","13","13 Mini","13 Pro","13 Pro Max","14","14 Plus","14 Pro","14 Pro Max","15","15 Plus","15 Pro","15 Pro Max","16","16 Plus","16 Pro","16 Pro Max","17","17 Pro","17 Pro Max"],
+    "certainty": 70,
+    "status": "corroborar",
+    "severity": "high",
+    "solution": "DFU restore; si persiste, reemplazar pantalla completa (contiene DCP).",
+    "type": "text"
+  },
+  {
+    "code": "SEP PANIC",
+    "component": "Secure Enclave Processor",
+    "models": ["XS","XS Max","XR","11","11 Pro","11 Pro Max","12","12 Mini","12 Pro","12 Pro Max","13","13 Mini","13 Pro","13 Pro Max","14","14 Plus","14 Pro","14 Pro Max","15","15 Plus","15 Pro","15 Pro Max","16","16 Plus","16 Pro","16 Pro Max","17","17 Pro","17 Pro Max"],
+    "certainty": 95,
+    "status": "confirmado",
+    "severity": "critical",
+    "solution": "Problema de seguridad crítica; requiere DFU restore o reemplazo de placa.",
+    "type": "text"
+  },
+  {
+    "code": "PMU PANIC",
+    "component": "Power Management Unit",
+    "models": ["XS","XS Max","XR","11","11 Pro","11 Pro Max","12","12 Mini","12 Pro","12 Pro Max","13","13 Mini","13 Pro","13 Pro Max","14","14 Plus","14 Pro","14 Pro Max","15","15 Plus","15 Pro","15 Pro Max","16","16 Plus","16 Pro","16 Pro Max","17","17 Pro","17 Pro Max"],
+    "certainty": 85,
+    "status": "confirmado",
+    "severity": "critical",
+    "solution": "Reemplazar PMU IC; verificar líneas de alimentación críticas.",
+    "type": "text"
+  },
+  {
+    "code": "NFC PANIC",
+    "component": "Near Field Communication",
+    "models": ["XS","XS Max","XR","11","11 Pro","11 Pro Max","12","12 Mini","12 Pro","12 Pro Max","13","13 Mini","13 Pro","13 Pro Max","14","14 Plus","14 Pro","14 Pro Max","15","15 Plus","15 Pro","15 Pro Max","16","16 Plus","16 Pro","16 Pro Max","17","17 Pro","17 Pro Max"],
+    "certainty": 60,
+    "status": "corroborar",
+    "severity": "low",
+    "solution": "Probar Apple Pay; reemplazar módulo NFC si es necesario.",
+    "type": "text"
+  },
+  {
+    "code": "UWB PANIC",
+    "component": "Ultra Wideband chip",
+    "models": ["11","11 Pro","11 Pro Max","12","12 Mini","12 Pro","12 Pro Max","13","13 Mini","13 Pro","13 Pro Max","14","14 Plus","14 Pro","14 Pro Max","15","15 Plus","15 Pro","15 Pro Max","16","16 Plus","16 Pro","16 Pro Max","17","17 Pro","17 Pro Max"],
+    "certainty": 50,
+    "status": "corroborar",
+    "severity": "low",
+    "solution": "Verificar chip U1; posible fallo en precisión de ubicación.",
+    "type": "text"
+  },
+  {
+    "code": "BARO PANIC",
+    "component": "Barometric pressure sensor",
+    "models": ["XS","XS Max","XR","11","11 Pro","11 Pro Max","12","12 Mini","12 Pro","12 Pro Max","13","13 Mini","13 Pro","13 Pro Max","14","14 Plus","14 Pro","14 Pro Max","15","15 Plus","15 Pro","15 Pro Max","16","16 Plus","16 Pro","16 Pro Max","17","17 Pro","17 Pro Max"],
+    "certainty": 65,
+    "status": "corroborar",
+    "severity": "low",
+    "solution": "Cambiar flex del puerto de carga (contiene barómetro).",
+    "type": "text"
+  },
+  {
+    "code": "GYRO PANIC",
+    "component": "Gyroscope/IMU failure",
+    "models": ["XS","XS Max","XR","11","11 Pro","11 Pro Max","12","12 Mini","12 Pro","12 Pro Max","13","13 Mini","13 Pro","13 Pro Max","14","14 Plus","14 Pro","14 Pro Max","15","15 Plus","15 Pro","15 Pro Max","16","16 Plus","16 Pro","16 Pro Max","17","17 Pro","17 Pro Max"],
+    "certainty": 70,
+    "status": "corroborar",
+    "severity": "medium",
+    "solution": "Verificar chip IMU; posible reemplazo de placa lógica.",
+    "type": "text"
+  },
+  {
+    "code": "External device IO error detected",
+    "component": "Flex de carga / Cámara trasera defectuoso",
+    "models": ["15","15 Plus","15 Pro","15 Pro Max","16","16 Plus","16 Pro","16 Pro Max","17","17 Pro","17 Pro Max"],
+    "certainty": 85,
+    "status": "confirmado",
+    "severity": "high",
+    "solution": "Reemplazar flex de carga OEM; verificar conexiones de cámara trasera y sensor de proximidad.",
+    "type": "text",
+    "notes": "Error de IO externa común en iPhone 15+ causado por flex dañado o mala soldadura."
+  },
+  {
+    "code": "charging port / rear camera flex cable malfunction",
+    "component": "Cable flex puerto de carga / Cámara trasera",
+    "models": ["15","15 Plus","15 Pro","15 Pro Max","16","16 Plus","16 Pro","16 Pro Max","17","17 Pro","17 Pro Max"],
+    "certainty": 90,
+    "status": "confirmado",
+    "severity": "high",
+    "solution": "Sustituir conjunto completo de flex inferior; probar carga inalámbrica como alternativa temporal.",
+    "type": "text"
+  },
+  {
+    "code": "userspace watchdog timeout",
+    "component": "Watchdog timeout de userspace",
+    "models": ["XS","XS Max","XR","11","11 Pro","11 Pro Max","12","12 Mini","12 Pro","12 Pro Max","13","13 Mini","13 Pro","13 Pro Max","14","14 Plus","14 Pro","14 Pro Max","15","15 Plus","15 Pro","15 Pro Max","16","16 Plus","16 Pro","16 Pro Max","17","17 Pro","17 Pro Max"],
+    "certainty": 85,
+    "status": "confirmado",
+    "severity": "high",
+    "solution": "Reinicio forzado del dispositivo; verificar servicios SpringBoard y backboardd; posible problema de software o batería.",
+    "type": "text",
+    "notes": "Watchdog timeout indica que la interfaz de usuario no responde. Común en iOS 18 con apps problemáticas."
+  }
+]

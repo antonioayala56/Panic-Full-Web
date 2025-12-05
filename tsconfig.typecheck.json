@@ -1,0 +1,38 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "skipLibCheck": true,
+
+    "composite": true,
+    "baseUrl": ".",
+    "types": ["nuxt", "@types/node", "vite/client"],
+
+    "paths": {
+      "#imports": [".nuxt/imports.d.ts"],
+      "#imports/*": [".nuxt/imports.d.ts"]
+    }
+  },
+  "include": [
+    "nuxt.config.ts",
+    "app.vue",
+    "error.vue",
+
+    "components",
+    "composables",
+    "layouts",
+    "middleware",
+    "pages",
+    "plugins",
+    "server",
+    "utils",
+    "types",
+
+    ".nuxt"
+  ],
+  "exclude": [
+    "node_modules",
+    ".output",
+    "dist"
+  ]
+}

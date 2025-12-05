@@ -1,0 +1,106 @@
+/* ==========================================
+   PANIC FULL PRO — FUTURISTIC CIRCUIT THEME
+   ========================================== */
+
+/* Fondo global con textura de circuitos */
+body {
+  background: #02040a;
+  background-image:
+      radial-gradient(circle at 20% 20%, rgba(0, 150, 255, 0.15), transparent 60%),
+      radial-gradient(circle at 80% 80%, rgba(0, 200, 255, 0.1), transparent 60%),
+      url("data:image/svg+xml,%3Csvg width='300' height='300' viewBox='0 0 100 100' fill='none' stroke='%2300bbff22' stroke-width='0.3'%3E%3Cpath d='M10 10h80v80H10zM10 30h40v40H10zM50 10v20M50 70v20M30 10v20M70 70v20'/%3E%3C/svg%3E");
+  background-size: cover, cover, 300px;
+  background-attachment: fixed;
+  color: white;
+}
+
+/* Glow futurista para títulos */
+h1, h2, h3 {
+  text-shadow: 0 0 8px rgba(0, 150, 255, 0.5);
+}
+
+/* Línea eléctrica animada debajo del título principal */
+h1::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  margin: 8px auto 0;
+  background: linear-gradient(90deg, #00aaff, #00e0ff);
+  border-radius: 2px;
+  animation: pulseGlow 2s infinite alternate;
+}
+
+@keyframes pulseGlow {
+  from { box-shadow: 0 0 8px #00c3ff; }
+  to   { box-shadow: 0 0 16px #00eaff; }
+}
+
+/* Animación fade-in universal */
+@keyframes fade {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade {
+  animation: fade 0.6s ease-out;
+}
+
+/* Contenedores con borde cibernético */
+.card-hover {
+  transition: 0.25s ease;
+  border: 1px solid #0d1926;
+  background: rgba(5, 10, 20, 0.6);
+}
+
+.card-hover:hover {
+  border-color: #00baff;
+  box-shadow: 0 0 12px #009dff70;
+  transform: translateY(-2px);
+}
+
+/* Botones futuristas */
+button,
+.nuxt-link-active,
+.nuxt-link-exact-active {
+  transition: 0.2s ease;
+}
+
+button:hover,
+.nuxt-link-active:hover {
+  box-shadow: 0 0 8px #00baffaa;
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
+/* Scrollbar futurista */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0f17;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0077cc;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0099ff;
+}
+
+/* Marca de agua sutil tipo circuito */
+.watermark-circuit {
+  opacity: 0.08;
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  background-image:
+    url("data:image/svg+xml,%3Csvg width='500' height='500' viewBox='0 0 100 100' fill='none' stroke='%2300bbff' stroke-width='0.3'%3E%3Cpath d='M10 10h80v80H10zM10 50h80M50 10v80M25 25h50v50H25z'/%3E%3C/svg%3E");
+  background-size: 500px;
+  z-index: -1;
+}

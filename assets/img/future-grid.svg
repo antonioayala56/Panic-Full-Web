@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <radialGradient id="bgGradient" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#00111A"/>
+      <stop offset="100%" stop-color="#000A0F"/>
+    </radialGradient>
+
+    <linearGradient id="lineGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00eaff" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#0080ff" stop-opacity="0.1"/>
+    </linearGradient>
+
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="100%" height="100%" fill="url(#bgGradient)"/>
+
+  <!-- Grid horizontal -->
+  <g stroke="url(#lineGlow)" stroke-width="1">
+    <line x1="0" y1="100" x2="1920" y2="100"/>
+    <line x1="0" y1="200" x2="1920" y2="200"/>
+    <line x1="0" y1="300" x2="1920" y2="300"/>
+    <line x1="0" y1="400" x2="1920" y2="400"/>
+    <line x1="0" y1="500" x2="1920" y2="500"/>
+    <line x1="0" y1="600" x2="1920" y2="600"/>
+    <line x1="0" y1="700" x2="1920" y2="700"/>
+    <line x1="0" y1="800" x2="1920" y2="800"/>
+    <line x1="0" y1="900" x2="1920" y2="900"/>
+  </g>
+
+  <!-- Grid vertical -->
+  <g stroke="url(#lineGlow)" stroke-width="1">
+    <line x1="100" y1="0" x2="100" y2="1080"/>
+    <line x1="200" y1="0" x2="200" y2="1080"/>
+    <line x1="300" y1="0" x2="300" y2="1080"/>
+    <line x1="400" y1="0" x2="400" y2="1080"/>
+    <line x1="500" y1="0" x2="500" y2="1080"/>
+    <line x1="600" y1="0" x2="600" y2="1080"/>
+    <line x1="700" y1="0" x2="700" y2="1080"/>
+    <line x1="800" y1="0" x2="800" y2="1080"/>
+    <line x1="900" y1="0" x2="900" y2="1080"/>
+    <line x1="1000" y1="0" x2="1000" y2="1080"/>
+    <line x1="1100" y1="0" x2="1100" y2="1080"/>
+    <line x1="1200" y1="0" x2="1200" y2="1080"/>
+    <line x1="1300" y1="0" x2="1300" y2="1080"/>
+    <line x1="1400" y1="0" x2="1400" y2="1080"/>
+    <line x1="1500" y1="0" x2="1500" y2="1080"/>
+    <line x1="1600" y1="0" x2="1600" y2="1080"/>
+    <line x1="1700" y1="0" x2="1700" y2="1080"/>
+    <line x1="1800" y1="0" x2="1800" y2="1080"/>
+  </g>
+
+  <!-- Nodos con glow -->
+  <g fill="#00eaff" filter="url(#glow)">
+    <circle cx="400" cy="200" r="4"/>
+    <circle cx="900" cy="140" r="4"/>
+    <circle cx="1200" cy="300" r="5"/>
+    <circle cx="600" cy="500" r="4"/>
+    <circle cx="1500" cy="700" r="6"/>
+    <circle cx="300" cy="850" r="4"/>
+    <circle cx="1000" cy="900" r="5"/>
+  </g>
+
+  <!-- Líneas diagonales animadas -->
+  <g stroke="url(#lineGlow)" stroke-width="2" filter="url(#glow)">
+    <line x1="0" y1="1080" x2="600" y2="0"/>
+    <line x1="500" y1="1080" x2="1400" y2="0"/>
+    <line x1="900" y1="1080" x2="1920" y2="200"/>
+  </g>
+</svg>

@@ -1,0 +1,64 @@
+{
+  "extends": "./.nuxt/tsconfig.json",
+
+  "compilerOptions": {
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "useUnknownInCatchVariables": false,
+
+    "baseUrl": ".",
+
+    "paths": {
+      "~/*": ["./*"],
+      "@/*": ["./*"],
+      "#imports": [".nuxt/imports.d.ts"]
+    },
+
+    "module": "esnext",
+    "moduleResolution": "bundler",
+
+    "lib": [
+      "ESNext",
+      "DOM",
+      "DOM.Iterable"
+    ],
+
+    "jsx": "preserve",
+
+    "types": [
+      "nuxt",
+      "@types/node",
+      "vite/client"
+    ],
+
+    "resolveJsonModule": true,
+    "noUncheckedIndexedAccess": false,
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": true
+  },
+
+  "include": [
+    "nuxt.config.ts",
+    "app.vue",
+    "error.vue",
+    "pages/**/*.vue",
+    "components/**/*.vue",
+    "components/panic/*.ts",
+    "layouts/**/*.vue",
+    "composables/**/*.ts",
+    "server/**/*.ts",
+    "server/**/*.json",
+    "core/**/*.ts",
+    "assets/**/*.d.ts",
+    "plugins/**/*.ts",
+    "middleware/**/*.ts",
+    "types/**/*.ts",
+    ".nuxt"
+  ],
+
+  "exclude": [
+    "node_modules",
+    ".output",
+    "dist"
+  ]
+}

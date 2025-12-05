@@ -1,0 +1,20 @@
+# Builds / caches
+.nuxt
+.output
+dist
+node_modules
+coverage
+*.log
+*.cache
+*.tmp
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode
+.idea
+
+# Env
+.env
+.env.*
+!.env.example
