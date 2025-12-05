@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue"
 
+definePageMeta({
+  middleware: 'auth'
+})
+
 import DropZone from "@/components/panic/DropZone.vue"
 import PanicResult from "@/components/panic/PanicResult.vue"
 import PanicSummaryCard from "@/components/panic/PanicSummaryCard.vue"
@@ -82,7 +86,7 @@ async function exportPDF() {
     <!-- RESULTADOS -->
     <div v-if="result" class="results">
       <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold text-white">Resultados del análisis</h2>
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Resultados del análisis</h2>
         <button
           class="export-btn"
           @click="exportPDF"
@@ -105,6 +109,10 @@ async function exportPDF() {
   max-width: 1100px;
   margin: auto;
   padding: 2rem;
+  color: #1e293b;
+}
+
+.dark .page-container {
   color: white;
 }
 

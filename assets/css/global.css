@@ -1,17 +1,36 @@
 /* ==========================================
-   PANIC FULL PRO — FUTURISTIC CIRCUIT THEME
-   ========================================== */
+    PANIC FULL PRO — FUTURISTIC CIRCUIT THEME
+    ========================================== */
+
+/* Light theme backgrounds */
+:root {
+  --bg-main: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+  --bg-radial1: rgba(245, 158, 11, 0.1);
+  --bg-radial2: rgba(249, 115, 22, 0.08);
+  --circuit-color: #0f172a22;
+  --text-color: #1e293b;
+}
+
+/* Dark theme backgrounds */
+.dark {
+  --bg-main: linear-gradient(135deg, #0c0f17 0%, #1a1d29 50%, #0c0f17 100%);
+  --bg-radial1: rgba(0, 150, 255, 0.15);
+  --bg-radial2: rgba(0, 200, 255, 0.1);
+  --circuit-color: #00bbff22;
+  --text-color: white;
+}
 
 /* Fondo global con textura de circuitos */
 body {
-  background: #02040a;
+  background: var(--bg-main);
   background-image:
-      radial-gradient(circle at 20% 20%, rgba(0, 150, 255, 0.15), transparent 60%),
-      radial-gradient(circle at 80% 80%, rgba(0, 200, 255, 0.1), transparent 60%),
-      url("data:image/svg+xml,%3Csvg width='300' height='300' viewBox='0 0 100 100' fill='none' stroke='%2300bbff22' stroke-width='0.3'%3E%3Cpath d='M10 10h80v80H10zM10 30h40v40H10zM50 10v20M50 70v20M30 10v20M70 70v20'/%3E%3C/svg%3E");
+      radial-gradient(circle at 20% 20%, var(--bg-radial1), transparent 60%),
+      radial-gradient(circle at 80% 80%, var(--bg-radial2), transparent 60%),
+      url("data:image/svg+xml,%3Csvg width='300' height='300' viewBox='0 0 100 100' fill='none' stroke='var(--circuit-color)' stroke-width='0.3'%3E%3Cpath d='M10 10h80v80H10zM10 30h40v40H10zM50 10v20M50 70v20M30 10v20M70 70v20'/%3E%3C/svg%3E");
   background-size: cover, cover, 300px;
   background-attachment: fixed;
-  color: white;
+  color: var(--text-color);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 /* Glow futurista para títulos */
@@ -44,6 +63,11 @@ h1::after {
 
 .animate-fade {
   animation: fade 0.6s ease-out;
+}
+
+/* Smooth theme transitions */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
 /* Contenedores con borde cibernético */

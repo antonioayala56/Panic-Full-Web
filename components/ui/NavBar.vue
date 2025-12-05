@@ -3,9 +3,11 @@
 import { ref } from 'vue'
 import { useRoute } from '#imports'
 import { useAuth } from '~/composables/useAuth'
+import { useTheme } from '~/composables/useTheme'
 
 const route = useRoute()
 const { user, signOut } = useAuth()
+const { toggleTheme, isDark } = useTheme()
 const showAuthModal = ref(false)
 
 const navigation = [
@@ -61,17 +63,26 @@ const handleNavClick = (item: any) => {
         </a>
       </div>
 
+      <!-- Theme Toggle -->
+      <div class="theme-toggle">
+        <button @click="toggleTheme" class="theme-button">
+          <svg v-if="isDark" class="theme-icon" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+          </svg>
+          <svg v-else class="theme-icon" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+          </svg>
+        </button>
+      </div>
+
       <!-- Auth Button -->
       <div class="auth-section">
         <button v-if="!user" @click="showAuthModal = true" class="auth-button">
           Iniciar sesión
         </button>
-        <div v-else class="user-menu">
-          <span class="user-name">{{ user.displayName || user.email }}</span>
-          <button @click="signOut" class="logout-button">
-            Cerrar sesión
-          </button>
-        </div>
+        <button v-else @click="showAuthModal = true" class="user-button">
+          {{ user.displayName || user.email }}
+        </button>
       </div>
 
       <!-- Mobile menu button -->
@@ -92,7 +103,7 @@ const handleNavClick = (item: any) => {
 
 <style scoped>
 .navbar {
-  @apply sticky top-0 z-50 backdrop-blur-md bg-black/20 border-b border-white/10;
+  @apply sticky top-0 z-50 backdrop-blur-md bg-white/10 dark:bg-black/20 border-b border-gray-200 dark:border-white/10;
 }
 
 .navbar-container {
@@ -116,7 +127,7 @@ const handleNavClick = (item: any) => {
 }
 
 .brand-text {
-  @apply text-xl font-bold text-white tracking-wide;
+  @apply text-xl font-bold text-gray-900 dark:text-white tracking-wide;
 }
 
 .brand-accent {
@@ -128,7 +139,7 @@ const handleNavClick = (item: any) => {
 }
 
 .nav-link {
-  @apply flex items-center gap-2 px-3 py-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-200 text-decoration-none;
+  @apply flex items-center gap-2 px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 transition-all duration-200 text-decoration-none;
 }
 
 .nav-link-active {
@@ -148,11 +159,23 @@ const handleNavClick = (item: any) => {
 }
 
 .menu-button {
-  @apply p-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-colors;
+  @apply p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 transition-colors;
 }
 
 .menu-icon {
   @apply w-6 h-6;
+}
+
+.theme-toggle {
+  @apply hidden md:flex items-center;
+}
+
+.theme-button {
+  @apply p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 transition-all duration-200;
+}
+
+.theme-icon {
+  @apply w-5 h-5;
 }
 
 .auth-section {
@@ -163,16 +186,8 @@ const handleNavClick = (item: any) => {
   @apply px-4 py-2 bg-gradient-to-r from-orange-500 to-red-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all;
 }
 
-.user-menu {
-  @apply flex items-center gap-3;
-}
-
-.user-name {
-  @apply text-white font-medium;
-}
-
-.logout-button {
-  @apply px-3 py-1 text-orange-400 hover:text-orange-300 text-sm font-medium border border-orange-400/30 rounded hover:bg-orange-400/10 transition-colors;
+.user-button {
+  @apply px-4 py-2 bg-gray-100 dark:bg-white/10 text-gray-900 dark:text-white font-medium rounded-lg hover:bg-gray-200 dark:hover:bg-white/20 transition-all border border-gray-200 dark:border-white/20;
 }
 
 .sr-only {

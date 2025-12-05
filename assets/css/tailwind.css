@@ -10,9 +10,9 @@
 
 @layer components {
   .card {
-    @apply bg-[#16181d] border border-[#2a2d34] rounded-xl shadow-md;
+    @apply bg-gray-100 dark:bg-[#16181d] border border-gray-200 dark:border-[#2a2d34] rounded-xl shadow-md;
   }
   .card-hover {
-    @apply hover:bg-[#1b1d22] transition-all duration-200;
+    @apply hover:bg-gray-200 dark:hover:bg-[#1b1d22] transition-all duration-200;
   }
 }

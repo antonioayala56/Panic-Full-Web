@@ -133,9 +133,13 @@ function cancelPaste() {
   padding: 32px;
   text-align: center;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(6px);
   transition: 0.2s;
+}
+
+.dark .drop-zone {
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .drop-zone:hover {
@@ -149,13 +153,21 @@ function cancelPaste() {
 .label-text {
   font-size: 1.2rem;
   font-weight: 600;
+  color: #92400e;
+}
+
+.dark .label-text {
   color: #fcd34d;
 }
 
 .sub-text {
   margin-top: 6px;
-  color: #fb923c;
+  color: #ea580c;
   font-size: 0.9rem;
+}
+
+.dark .sub-text {
+  color: #fb923c;
 }
 
 .select-btn {
@@ -200,15 +212,24 @@ function cancelPaste() {
   padding: 12px;
   border: 1px solid rgba(245, 158, 11, 0.3);
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.05);
-  color: white;
+  background: rgba(255, 255, 255, 0.9);
+  color: #1e293b;
   font-family: monospace;
   font-size: 0.9rem;
   resize: vertical;
   margin-top: 16px;
 }
 
+.dark .paste-textarea {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+}
+
 .paste-textarea::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.dark .paste-textarea::placeholder {
   color: rgba(255, 255, 255, 0.5);
 }
 
