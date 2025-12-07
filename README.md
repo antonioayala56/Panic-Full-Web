@@ -169,3 +169,4 @@ Para reportar bugs o solicitar funcionalidades, crear un issue en el repositorio
 ---
 
 **⚠️ Nota importante**: Esta herramienta está diseñada para técnicos profesionales. El análisis de Panic Logs requiere conocimientos técnicos para interpretar correctamente los resultados.
+ 
