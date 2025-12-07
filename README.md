@@ -62,8 +62,7 @@ npm run build
 
 ## 📱 Modelos compatibles
 
-### Serie X/XS/XR
-- iPhone X
+### Serie XS/XR
 - iPhone XS / XS Max
 - iPhone XR
 
