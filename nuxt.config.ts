@@ -26,25 +26,8 @@ export default defineNuxtConfig({
 
   modules: [
     "@nuxtjs/tailwindcss",
-    "@pinia/nuxt",
-    "@nuxtjs/i18n"
+    "@pinia/nuxt"
   ],
-
-  i18n: {
-    locales: [
-      { code: 'en', name: 'English' },
-      { code: 'es', name: 'Español' }
-    ],
-    defaultLocale: 'es',
-    strategy: 'prefix',
-    detectBrowserLanguage: {
-      useCookie: true,
-      cookieKey: 'i18n_redirected',
-      redirectOn: 'root',
-      alwaysRedirect: false,
-      fallbackLocale: 'es'
-    }
-  },
 
   vite: {
     server: {

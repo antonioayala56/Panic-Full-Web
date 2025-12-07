@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue"
 
-definePageMeta({
-  middleware: 'auth'
-})
-
 import DropZone from "@/components/panic/DropZone.vue"
 import PanicResult from "@/components/panic/PanicResult.vue"
 import PanicSummaryCard from "@/components/panic/PanicSummaryCard.vue"
