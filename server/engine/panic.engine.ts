@@ -1,5 +1,6 @@
 // server/engine/panic.engine.ts
 import panicDB from "~/server/assets/panic_db.json"
+import { ProductMap } from "~/core/product-map"
 
 export interface PanicEntry {
   code: string
@@ -98,45 +99,8 @@ function extractModelFromPanic(text: string) {
         try {
           const jsonData = JSON.parse(block)
           if (jsonData.product) {
-            // Mapear product a modelo legible
-            const productMap: Record<string, string> = {
-              'iPhone10,1': '8',
-              'iPhone10,2': '8 Plus',
-              'iPhone10,3': 'X',
-              'iPhone10,4': '8',
-              'iPhone10,5': '8 Plus',
-              'iPhone10,6': 'X',
-              'iPhone11,2': 'XS',
-              'iPhone11,4': 'XS Max',
-              'iPhone11,6': 'XS Max',
-              'iPhone11,8': 'XR',
-              'iPhone12,1': '11',
-              'iPhone12,3': '11 Pro',
-              'iPhone12,5': '11 Pro Max',
-              'iPhone12,8': 'SE (2nd gen)',
-              'iPhone13,1': '12 Mini',
-              'iPhone13,2': '12',
-              'iPhone13,3': '12 Pro',
-              'iPhone13,4': '12 Pro Max',
-              'iPhone14,2': '13',
-              'iPhone14,3': '13',
-              'iPhone14,4': '13 Pro',
-              'iPhone14,5': '13 Pro Max',
-              'iPhone14,6': 'SE (3rd gen)',
-              'iPhone14,7': '14',
-              'iPhone14,8': '14 Plus',
-              'iPhone15,2': '14 Pro',
-              'iPhone15,3': '14 Pro Max',
-              'iPhone15,4': '15',
-              'iPhone15,5': '15 Plus',
-              'iPhone16,1': '15 Pro',
-              'iPhone16,2': '15 Pro Max',
-              'iPhone17,1': '16',
-              'iPhone17,2': '16 Plus',
-              'iPhone17,3': '16 Pro',
-              'iPhone17,4': '16 Pro Max'
-            }
-            return productMap[jsonData.product] || jsonData.product.replace('iPhone', '').replace(',', ' ')
+            // Usar el ProductMap centralizado para mapear product a modelo legible
+            return ProductMap[jsonData.product] || jsonData.product.replace('iPhone', 'iPhone ').replace(',', ' ')
           }
         } catch (e) {
           // Este bloque no es JSON válido, continuar

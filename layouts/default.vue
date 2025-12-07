@@ -1,6 +1,11 @@
+<script setup>
+// Importar manualmente si auto-import falla
+import NavBar from '~/components/ui/NavBar.vue'
+</script>
+
 <template>
   <div class="min-h-screen bg-[#0c0f17] text-gray-200 flex flex-col">
-    
+
     <!-- Navigation -->
     <NavBar />
 
@@ -16,8 +21,8 @@
           <div>
             <h3 class="text-lg font-semibold text-white mb-4">iPanic Reader Web</h3>
             <p class="text-gray-400 text-sm leading-relaxed">
-              Analizador profesional de Panic Logs para iPhone. 
-              Herramienta esencial para técnicos de reparación.
+              Analizador profesional de Panic Logs para técnicos avanzados.
+              Compatible desde iPhone XS hasta 16 Pro Max.
             </p>
           </div>
           

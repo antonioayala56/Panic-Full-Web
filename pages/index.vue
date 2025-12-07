@@ -1,13 +1,22 @@
 <template>
-  <div class="text-center">
+  <!-- Matrix Rain Background -->
+  <div class="matrix-rain">
+    <div v-for="i in 30" :key="i" class="matrix-column" :style="{ left: (i * 3.33) + '%', animationDelay: (Math.random() * 5) + 's' }">
+      <div v-for="j in 50" :key="j" class="matrix-char" :style="{ animationDelay: (j * 0.1) + 's' }">
+        {{ ['0', '1'][Math.floor(Math.random() * 2)] }}
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center relative z-10">
 
     <h1 class="text-5xl font-bold mb-6 tracking-wide drop-shadow">
-      Bienvenido a <span class="text-orange-400">PanicFull PRO</span>
+      Bienvenido a <span class="text-cyan-400 glow-text">PanicFull PRO</span>
     </h1>
 
     <p class="text-gray-400 max-w-2xl mx-auto text-lg mb-10">
       Analizador profesional de Panic Logs para técnicos avanzados.
-      Compatible desde iPhone XS hasta 17 Pro Max.
+      Compatible desde iPhone XS hasta 16 Pro Max.
     </p>
 
     <!-- Línea descriptiva -->
@@ -143,7 +152,7 @@ async function exportPDF() {
 }
 
 .analyze-btn {
-  background: linear-gradient(90deg, #f59e0b, #dc2626);
+  background: linear-gradient(90deg, var(--c-primary), var(--c-secondary));
   padding: 12px 28px;
   border-radius: 12px;
   font-size: 1.1rem;
@@ -151,12 +160,12 @@ async function exportPDF() {
   cursor: pointer;
   color: white;
   transition: 0.2s;
-  box-shadow: 0 0 12px rgba(245,158,11,0.5);
+  box-shadow: 0 0 12px var(--c-primary-glow);
 }
 
 .analyze-btn:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 16px rgba(245,158,11,0.7);
+  box-shadow: 0 0 16px var(--c-primary-glow);
 }
 
 .analyze-btn:disabled {
@@ -194,5 +203,46 @@ async function exportPDF() {
 
 .hero-icon {
   @apply mr-2;
+}
+
+.glow-text {
+  text-shadow: 0 0 10px var(--c-primary-glow), 0 0 20px var(--c-primary);
+}
+
+/* Matrix Rain Effect */
+.matrix-rain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.matrix-column {
+  position: absolute;
+  top: -100%;
+  width: 10px;
+  animation: matrix-fall 10s linear infinite;
+}
+
+.matrix-char {
+  color: var(--c-primary);
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  opacity: 0.6;
+  animation: matrix-fade 2s ease-in-out infinite;
+}
+
+@keyframes matrix-fall {
+  0% { top: -100%; }
+  100% { top: 200vh; }
+}
+
+@keyframes matrix-fade {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.8; }
 }
 </style>

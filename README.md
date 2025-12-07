@@ -1,6 +1,6 @@
 # iPanic Reader Web
 
-Analizador profesional de Panic Logs para iPhone (XS → 16 Pro Max) que funciona 100% en el navegador.
+Analizador profesional de Panic Logs para técnicos avanzados. Compatible desde iPhone XS hasta 16 Pro Max.
 
 ## 🚀 Características
 

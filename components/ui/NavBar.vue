@@ -1,12 +1,8 @@
 <!-- components/ui/NavBar.vue -->
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useRoute } from '#imports'
-import { useAuth } from '~/composables/useAuth'
 
 const route = useRoute()
-const { user, signOut } = useAuth()
-const showAuthModal = ref(false)
 
 const navigation = [
   { name: 'Inicio', href: '#', icon: '🏠', action: 'scrollToTop' },
@@ -61,18 +57,6 @@ const handleNavClick = (item: any) => {
         </a>
       </div>
 
-      <!-- Auth Button -->
-      <div class="auth-section">
-        <button v-if="!user" @click="showAuthModal = true" class="auth-button">
-          Iniciar sesión
-        </button>
-        <div v-else class="user-menu">
-          <span class="user-name">{{ user.displayName || user.email }}</span>
-          <button @click="signOut" class="logout-button">
-            Cerrar sesión
-          </button>
-        </div>
-      </div>
 
       <!-- Mobile menu button -->
       <div class="mobile-menu-button">
@@ -85,8 +69,6 @@ const handleNavClick = (item: any) => {
       </div>
     </div>
 
-    <!-- Auth Modal -->
-    <AuthModal v-model:show="showAuthModal" />
   </nav>
 </template>
 
@@ -104,7 +86,7 @@ const handleNavClick = (item: any) => {
 }
 
 .brand-link {
-  @apply flex items-center gap-3 text-decoration-none;
+  @apply flex items-center gap-3 no-underline;
 }
 
 .brand-icon {
@@ -128,7 +110,7 @@ const handleNavClick = (item: any) => {
 }
 
 .nav-link {
-  @apply flex items-center gap-2 px-3 py-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-200 text-decoration-none;
+  @apply flex items-center gap-2 px-3 py-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-200 no-underline;
 }
 
 .nav-link-active {
@@ -156,7 +138,7 @@ const handleNavClick = (item: any) => {
 }
 
 .auth-section {
-  @apply hidden md:flex items-center;
+  @apply flex items-center;
 }
 
 .auth-button {
