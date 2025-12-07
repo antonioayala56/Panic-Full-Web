@@ -2,7 +2,9 @@
 <template>
   <section class="donate-section">
     <div class="container">
-      <h2 class="section-title">¡Comprame un café! ☕</h2>
+      <h2 class="section-title">
+        ¡Comprame un café! ☕
+      </h2>
       <p class="section-description">
         Si esta herramienta te fue útil, considera apoyar al desarrollador con un café.
         Tu contribución ayuda a mantener y mejorar el proyecto.
@@ -13,8 +15,8 @@
           v-for="option in donateOptions"
           :key="option.amount"
           class="donate-button"
-          @click="handleDonate(option.amount)"
           :disabled="loading"
+          @click="handleDonate(option.amount)"
         >
           <span class="coffee-icon">☕</span>
           <span class="amount">${{ option.amount.toLocaleString('es-AR') }}</span>
@@ -22,7 +24,9 @@
         </button>
       </div>
 
-      <p class="thank-you">¡Gracias por tu apoyo! 🙏</p>
+      <p class="thank-you">
+        ¡Gracias por tu apoyo! 🙏
+      </p>
     </div>
   </section>
 </template>

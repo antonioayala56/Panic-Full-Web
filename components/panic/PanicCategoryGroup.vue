@@ -1,6 +1,7 @@
 <!-- components/panic/PanicCategoryGroup.vue -->
 <script setup lang="ts">
 import type { PanicEntry } from '~/server/engine/panic.engine'
+
 import PanicCodeCard from './PanicCodeCard.vue'
 
 defineProps<{
@@ -12,13 +13,15 @@ defineProps<{
 <template>
   <div class="category-group">
     <div class="category-header">
-      <h2 class="category-title">{{ category }}</h2>
+      <h2 class="category-title">
+        {{ category }}
+      </h2>
       <span class="entry-count">{{ entries.length }} problema{{ entries.length !== 1 ? 's' : '' }}</span>
     </div>
 
     <div class="entries-grid">
-      <PanicCodeCard 
-        v-for="entry in entries" 
+      <PanicCodeCard
+        v-for="entry in entries"
         :key="entry.code"
         :entry="entry"
       />

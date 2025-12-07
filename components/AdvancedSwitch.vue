@@ -31,9 +31,11 @@ const toggle = () => {
     <div class="switch-content">
       <div v-if="label || description" class="switch-labels">
         <label v-if="label" class="switch-label">{{ label }}</label>
-        <p v-if="description" class="switch-description">{{ description }}</p>
+        <p v-if="description" class="switch-description">
+          {{ description }}
+        </p>
       </div>
-      
+
       <button
         type="button"
         class="switch-button"

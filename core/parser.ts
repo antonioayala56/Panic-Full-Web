@@ -1,9 +1,10 @@
 // core/parser.ts
-import { analyzePanicLog } from "~/server/engine/panic.engine"
-import { Relations } from "./relations"
-import { ProductMap } from "./product-map"
+import { analyzePanicLog } from '~/server/engine/panic.engine'
 
-export async function buildParsedResult(text: string) {
+import { Relations } from './relations'
+import { ProductMap } from './product-map'
+
+export async function buildParsedResult (text: string) {
   const base = await analyzePanicLog(text)
 
   // traducir modelos internos tipo "iPhone14,2"

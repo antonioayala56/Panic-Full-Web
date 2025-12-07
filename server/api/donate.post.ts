@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
       init_point: initPoint,
       id: preferenceId
     }
-  } catch (error) {
+  } catch {
     throw createError({
       statusCode: 500,
       statusMessage: 'Error creating payment preference'

@@ -34,7 +34,7 @@ const handleNavClick = (item: any) => {
       <div class="navbar-brand">
         <NuxtLink to="/" class="brand-link">
           <div class="brand-icon">
-            <div class="icon-gradient"></div>
+            <div class="icon-gradient" />
           </div>
           <span class="brand-text">
             iPanic<span class="brand-accent">Reader</span>
@@ -67,7 +67,6 @@ const handleNavClick = (item: any) => {
         </button>
       </div>
     </div>
-
   </nav>
 </template>
 

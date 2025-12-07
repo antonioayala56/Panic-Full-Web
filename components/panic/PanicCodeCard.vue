@@ -10,8 +10,10 @@ defineProps<{
 <template>
   <div class="panic-code-card">
     <div class="card-header">
-      <h3 class="code-title">{{ entry.code }}</h3>
-      <span 
+      <h3 class="code-title">
+        {{ entry.code }}
+      </h3>
+      <span
         class="severity-badge"
         :class="{
           'severity-critical': entry.severity === 'critical',
@@ -24,13 +26,17 @@ defineProps<{
       </span>
     </div>
 
-    <p class="component-name">{{ entry.component }}</p>
+    <p class="component-name">
+      {{ entry.component }}
+    </p>
 
     <div v-if="entry.models?.length" class="models-section">
-      <h4 class="section-title">Modelos compatibles:</h4>
+      <h4 class="section-title">
+        Modelos compatibles:
+      </h4>
       <div class="models-grid">
-        <span 
-          v-for="model in entry.models" 
+        <span
+          v-for="model in entry.models"
           :key="model"
           class="model-tag"
         >
@@ -40,13 +46,21 @@ defineProps<{
     </div>
 
     <div class="solution-section">
-      <h4 class="section-title">Solución:</h4>
-      <p class="solution-text">{{ entry.solution }}</p>
+      <h4 class="section-title">
+        Solución:
+      </h4>
+      <p class="solution-text">
+        {{ entry.solution }}
+      </p>
     </div>
 
     <div v-if="entry.notes" class="notes-section">
-      <h4 class="section-title">Notas técnicas:</h4>
-      <p class="notes-text">{{ entry.notes }}</p>
+      <h4 class="section-title">
+        Notas técnicas:
+      </h4>
+      <p class="notes-text">
+        {{ entry.notes }}
+      </p>
     </div>
 
     <div class="metadata">

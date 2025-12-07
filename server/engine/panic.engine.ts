@@ -1,6 +1,6 @@
 // server/engine/panic.engine.ts
-import panicDB from "~/server/assets/panic_db.json"
-import { ProductMap } from "~/core/product-map"
+import panicDB from '~/server/assets/panic_db.json'
+import { ProductMap } from '~/core/product-map'
 
 export interface PanicEntry {
   code: string
@@ -22,9 +22,9 @@ const severityWeight: Record<string, number> = {
   low: 1
 }
 
-function autoSeverity(list: PanicEntry[]) {
+function autoSeverity (list: PanicEntry[]) {
   let max = 0
-  let level: string = "low"
+  let level: string = 'low'
 
   for (const c of list) {
     const w = severityWeight[c.severity] ?? 1
@@ -36,12 +36,12 @@ function autoSeverity(list: PanicEntry[]) {
   return level
 }
 
-function matchCodes(text: string) {
+function matchCodes (text: string) {
   const found: PanicEntry[] = []
   const lowerText = text.toLowerCase()
 
   for (const item of panicDB) {
-    if (!item.code) continue
+    if (!item.code) { continue }
 
     const code = item.code
     const lowerCode = code.toLowerCase()
@@ -77,20 +77,20 @@ function matchCodes(text: string) {
   return found
 }
 
-function groupByCategory(list: PanicEntry[]) {
+function groupByCategory (list: PanicEntry[]) {
   const out: Record<string, PanicEntry[]> = {}
 
   for (const item of list) {
-    const cat = item.component || "General"
+    const cat = item.component || 'General'
 
-    if (!out[cat]) out[cat] = []
+    if (!out[cat]) { out[cat] = [] }
     out[cat].push(item)
   }
 
   return out
 }
 
-function extractModelFromPanic(text: string) {
+function extractModelFromPanic (text: string) {
   try {
     // Buscar todos los bloques JSON en el texto
     const jsonBlocks = text.match(/\{[^}]*\}/g)
@@ -102,26 +102,26 @@ function extractModelFromPanic(text: string) {
             // Usar el ProductMap centralizado para mapear product a modelo legible
             return ProductMap[jsonData.product] || jsonData.product.replace('iPhone', 'iPhone ').replace(',', ' ')
           }
-        } catch (e) {
+        } catch {
           // Este bloque no es JSON válido, continuar
           continue
         }
       }
     }
-  } catch (e) {
+  } catch {
     // Error general
   }
   return null
 }
 
-function predictModel(text: string, list: PanicEntry[]) {
+function predictModel (text: string, list: PanicEntry[]) {
   // Primero intentar extraer modelo del JSON del panic
   const extractedModel = extractModelFromPanic(text)
-  if (extractedModel) return extractedModel
+  if (extractedModel) { return extractedModel }
 
   // Fallback a predicción basada en códigos detectados
   const all = list.flatMap(l => l.models || [])
-  if (all.length === 0) return "Desconocido"
+  if (all.length === 0) { return 'Desconocido' }
 
   const count: Record<string, number> = {}
 
@@ -133,19 +133,19 @@ function predictModel(text: string, list: PanicEntry[]) {
     .sort((a, b) => b[1] - a[1])[0][0]
 }
 
-export async function analyzePanicLog(text: string) {
+export function analyzePanicLog (text: string) {
   const detected = matchCodes(text)
   const model = predictModel(text, detected)
 
   // Filtrar códigos por modelo detectado si hay uno específico
-  const filteredCodes = model && model !== "Desconocido"
+  const filteredCodes = model && model !== 'Desconocido'
     ? detected.filter(code => code.models?.some(m =>
-        m.toLowerCase().includes(model.toLowerCase()) ||
+      m.toLowerCase().includes(model.toLowerCase()) ||
         model.toLowerCase().includes(m.toLowerCase())
-      )).map(code => ({
-        ...code,
-        models: [model] // Solo mostrar el modelo detectado
-      }))
+    )).map(code => ({
+      ...code,
+      models: [model] // Solo mostrar el modelo detectado
+    }))
     : detected
 
   const grouped = groupByCategory(filteredCodes)

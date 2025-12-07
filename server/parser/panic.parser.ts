@@ -1,7 +1,7 @@
 // server/parser/panic.parser.ts
-import { analyzePanicLog } from "~/server/engine/panic.engine"
+import { analyzePanicLog } from '~/server/engine/panic.engine'
 
-export async function runParser(text: string) {
+export async function runParser (text: string) {
   const analysis = await analyzePanicLog(text)
 
   return {

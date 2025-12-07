@@ -1,5 +1,6 @@
 // composables/usePanicDb.ts
 import { ref, readonly } from 'vue'
+
 import type { PanicEntry } from '~/server/engine/panic.engine'
 
 export const usePanicDb = () => {
@@ -24,7 +25,7 @@ export const usePanicDb = () => {
   }
 
   const searchCode = (code: string): PanicEntry | undefined => {
-    return panicCodes.value.find(entry => 
+    return panicCodes.value.find(entry =>
       entry.code.toLowerCase() === code.toLowerCase()
     )
   }

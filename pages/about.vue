@@ -7,43 +7,47 @@
     <div class="grid gap-8">
       <!-- Descripción principal -->
       <div class="card-pro">
-        <h2 class="text-2xl font-semibold mb-4 text-neon-blue">¿Qué es iPanic Reader Web?</h2>
+        <h2 class="text-2xl font-semibold mb-4 text-neon-blue">
+          ¿Qué es iPanic Reader Web?
+        </h2>
         <p class="text-gray-300 leading-relaxed mb-4">
-          iPanic Reader Web es un analizador profesional de Panic Logs para dispositivos iPhone, 
+          iPanic Reader Web es un analizador profesional de Panic Logs para dispositivos iPhone,
           diseñado específicamente para técnicos de reparación y profesionales del sector.
         </p>
         <p class="text-gray-300 leading-relaxed">
-          Funciona completamente en el navegador, sin necesidad de instalar software adicional, 
+          Funciona completamente en el navegador, sin necesidad de instalar software adicional,
           y es compatible con modelos desde iPhone XS hasta iPhone 16 Pro Max.
         </p>
       </div>
 
       <!-- Características -->
       <div class="card-pro">
-        <h2 class="text-2xl font-semibold mb-4 text-neon-purple">Características principales</h2>
+        <h2 class="text-2xl font-semibold mb-4 text-neon-purple">
+          Características principales
+        </h2>
         <ul class="space-y-3 text-gray-300">
           <li class="flex items-center gap-3">
-            <div class="w-2 h-2 bg-cyan-400 rounded-full"></div>
+            <div class="w-2 h-2 bg-cyan-400 rounded-full" />
             Análisis en tiempo real de Panic Logs
           </li>
           <li class="flex items-center gap-3">
-            <div class="w-2 h-2 bg-cyan-400 rounded-full"></div>
+            <div class="w-2 h-2 bg-cyan-400 rounded-full" />
             Base de datos actualizada con códigos de error
           </li>
           <li class="flex items-center gap-3">
-            <div class="w-2 h-2 bg-cyan-400 rounded-full"></div>
+            <div class="w-2 h-2 bg-cyan-400 rounded-full" />
             Detección automática de modelo de iPhone
           </li>
           <li class="flex items-center gap-3">
-            <div class="w-2 h-2 bg-cyan-400 rounded-full"></div>
+            <div class="w-2 h-2 bg-cyan-400 rounded-full" />
             Soluciones específicas para cada problema
           </li>
           <li class="flex items-center gap-3">
-            <div class="w-2 h-2 bg-cyan-400 rounded-full"></div>
+            <div class="w-2 h-2 bg-cyan-400 rounded-full" />
             Exportación de reportes en PDF
           </li>
           <li class="flex items-center gap-3">
-            <div class="w-2 h-2 bg-cyan-400 rounded-full"></div>
+            <div class="w-2 h-2 bg-cyan-400 rounded-full" />
             Interfaz drag & drop intuitiva
           </li>
         </ul>
@@ -51,10 +55,14 @@
 
       <!-- Modelos compatibles -->
       <div class="card-pro">
-        <h2 class="text-2xl font-semibold mb-4 text-neon-blue">Modelos compatibles</h2>
+        <h2 class="text-2xl font-semibold mb-4 text-neon-blue">
+          Modelos compatibles
+        </h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-gray-300">
           <div>
-            <h3 class="font-semibold text-white mb-2">Serie X</h3>
+            <h3 class="font-semibold text-white mb-2">
+              Serie X
+            </h3>
             <ul class="space-y-1">
               <li>iPhone X</li>
               <li>iPhone XS</li>
@@ -63,7 +71,9 @@
             </ul>
           </div>
           <div>
-            <h3 class="font-semibold text-white mb-2">Serie 11-12</h3>
+            <h3 class="font-semibold text-white mb-2">
+              Serie 11-12
+            </h3>
             <ul class="space-y-1">
               <li>iPhone 11</li>
               <li>iPhone 11 Pro/Max</li>
@@ -72,7 +82,9 @@
             </ul>
           </div>
           <div>
-            <h3 class="font-semibold text-white mb-2">Serie 13-14</h3>
+            <h3 class="font-semibold text-white mb-2">
+              Serie 13-14
+            </h3>
             <ul class="space-y-1">
               <li>iPhone 13</li>
               <li>iPhone 13 Pro/Max</li>
@@ -81,7 +93,9 @@
             </ul>
           </div>
           <div>
-            <h3 class="font-semibold text-white mb-2">Serie 15-16</h3>
+            <h3 class="font-semibold text-white mb-2">
+              Serie 15-16
+            </h3>
             <ul class="space-y-1">
               <li>iPhone 15</li>
               <li>iPhone 15 Pro/Max</li>
@@ -94,7 +108,9 @@
 
       <!-- Cómo usar -->
       <div class="card-pro">
-        <h2 class="text-2xl font-semibold mb-4 text-neon-purple">Cómo usar</h2>
+        <h2 class="text-2xl font-semibold mb-4 text-neon-purple">
+          Cómo usar
+        </h2>
         <ol class="space-y-3 text-gray-300">
           <li class="flex gap-3">
             <span class="flex-shrink-0 w-6 h-6 bg-cyan-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
@@ -117,10 +133,14 @@
 
       <!-- Información técnica -->
       <div class="card-pro">
-        <h2 class="text-2xl font-semibold mb-4 text-neon-blue">Información técnica</h2>
+        <h2 class="text-2xl font-semibold mb-4 text-neon-blue">
+          Información técnica
+        </h2>
         <div class="grid md:grid-cols-2 gap-6 text-gray-300">
           <div>
-            <h3 class="font-semibold text-white mb-2">Tecnologías</h3>
+            <h3 class="font-semibold text-white mb-2">
+              Tecnologías
+            </h3>
             <ul class="space-y-1 text-sm">
               <li>• Nuxt 3 + Vue.js</li>
               <li>• Tailwind CSS</li>
@@ -129,7 +149,9 @@
             </ul>
           </div>
           <div>
-            <h3 class="font-semibold text-white mb-2">Privacidad</h3>
+            <h3 class="font-semibold text-white mb-2">
+              Privacidad
+            </h3>
             <ul class="space-y-1 text-sm">
               <li>• Análisis 100% local</li>
               <li>• No se envían datos a servidores</li>

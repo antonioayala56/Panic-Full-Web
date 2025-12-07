@@ -8,12 +8,12 @@ export const SeverityWeights = {
 
 export type SeverityLevel = keyof typeof SeverityWeights
 
-export function compareSeverity(a: SeverityLevel, b: SeverityLevel): number {
+export function compareSeverity (a: SeverityLevel, b: SeverityLevel): number {
   return SeverityWeights[a] - SeverityWeights[b]
 }
 
-export function maxSeverity(list: SeverityLevel[]): SeverityLevel {
-  let max: SeverityLevel = "low"
+export function maxSeverity (list: SeverityLevel[]): SeverityLevel {
+  let max: SeverityLevel = 'low'
 
   for (const s of list) {
     if (SeverityWeights[s] > SeverityWeights[max]) {

@@ -14,8 +14,12 @@
     />
 
     <div v-if="!showTextarea" class="upload-mode">
-      <p class="label-text">{{ props.modelValue ? 'Archivo cargado ✓' : 'Arrastrá tu Panic Log aquí' }}</p>
-      <p class="sub-text">{{ props.modelValue ? `Texto de ${props.modelValue.length} caracteres` : 'Archivos soportados: .txt, .log, .ips' }}</p>
+      <p class="label-text">
+        {{ props.modelValue ? 'Archivo cargado ✓' : 'Arrastrá tu Panic Log aquí' }}
+      </p>
+      <p class="sub-text">
+        {{ props.modelValue ? `Texto de ${props.modelValue.length} caracteres` : 'Archivos soportados: .txt, .log, .ips' }}
+      </p>
 
       <button class="select-btn" @click="openFileDialog">
         {{ props.modelValue ? 'Cambiar archivo' : 'Seleccionar archivo' }}
@@ -27,13 +31,15 @@
     </div>
 
     <div v-else class="paste-mode">
-      <p class="label-text">Pegá tu código Panic aquí</p>
+      <p class="label-text">
+        Pegá tu código Panic aquí
+      </p>
       <textarea
         v-model="pastedText"
         class="paste-textarea"
         placeholder="Pegá el contenido del archivo .txt, .log o .ips aquí..."
         @input="onTextInput"
-      ></textarea>
+      />
 
       <div class="paste-buttons">
         <button class="paste-submit-btn" @click="submitPastedText">
@@ -48,15 +54,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue"
+import { ref, onMounted, onUnmounted } from 'vue'
 
 const props = defineProps<{
   modelValue: string
 }>()
-const emit = defineEmits(["update:modelValue"])
+const emit = defineEmits(['update:modelValue'])
 const fileInput = ref<HTMLInputElement | null>(null)
 const showTextarea = ref(false)
-const pastedText = ref("")
+const pastedText = ref('')
 
 // Prevenir drag & drop global
 const preventDefaults = (e: Event) => {
@@ -72,26 +78,26 @@ onUnmounted(() => {
   // No remover listeners globales
 })
 
-function openFileDialog() {
+function openFileDialog () {
   fileInput.value?.click()
 }
 
-function onFileSelect(event: any) {
+function onFileSelect (event: any) {
   const file = event.target.files[0]
-  if (file) readFile(file)
+  if (file) { readFile(file) }
 }
 
-function onDragOver(e: DragEvent) {
+function onDragOver (e: DragEvent) {
   e.preventDefault()
   e.stopPropagation()
 }
 
-function onDragLeave(e: DragEvent) {
+function onDragLeave (e: DragEvent) {
   e.preventDefault()
   e.stopPropagation()
 }
 
-function onDrop(e: DragEvent) {
+function onDrop (e: DragEvent) {
   e.preventDefault()
   e.stopPropagation()
   if (e.dataTransfer?.files?.length) {
@@ -99,29 +105,29 @@ function onDrop(e: DragEvent) {
   }
 }
 
-function readFile(file: File) {
+function readFile (file: File) {
   const reader = new FileReader()
 
   reader.onload = () => {
-    const text = reader.result?.toString() || ""
-    emit("update:modelValue", text)
+    const text = reader.result?.toString() || ''
+    emit('update:modelValue', text)
   }
 
   reader.readAsText(file)
 }
 
-function onTextInput() {
+function onTextInput () {
   // Emitir el texto pegado inmediatamente
-  emit("update:modelValue", pastedText.value)
+  emit('update:modelValue', pastedText.value)
 }
 
-function submitPastedText() {
-  emit("update:modelValue", pastedText.value)
+function submitPastedText () {
+  emit('update:modelValue', pastedText.value)
   showTextarea.value = false
 }
 
-function cancelPaste() {
-  pastedText.value = ""
+function cancelPaste () {
+  pastedText.value = ''
   showTextarea.value = false
 }
 </script>

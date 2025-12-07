@@ -9,7 +9,6 @@
   </div>
 
   <div class="text-center relative z-10">
-
     <h1 class="text-5xl font-bold mb-6 tracking-wide drop-shadow">
       Bienvenido a <span class="text-cyan-400 glow-text">PanicFull PRO</span>
     </h1>
@@ -26,12 +25,13 @@
         Herramientas de diagnóstico avanzado para técnicos profesionales de iPhone
       </p>
     </div>
-
   </div>
 
   <!-- Sección de análisis -->
   <div class="analyze-section">
-    <h2 class="analyze-title">Análisis de Panic Log</h2>
+    <h2 class="analyze-title">
+      Análisis de Panic Log
+    </h2>
 
     <!-- DROPZONE -->
     <DropZone v-model="fileText" />
@@ -49,7 +49,9 @@
     <!-- RESULTADOS -->
     <div v-if="result" class="results">
       <div class="flex justify-between items-center mb-6">
-        <h3 class="text-2xl font-bold text-white">Resultados del análisis</h3>
+        <h3 class="text-2xl font-bold text-white">
+          Resultados del análisis
+        </h3>
         <button
           class="export-btn"
           @click="exportPDF"
@@ -70,35 +72,36 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue"
-import DonateSection from '~/components/DonateSection.vue'
-import DropZone from "@/components/panic/DropZone.vue"
-import PanicResult from "@/components/panic/PanicResult.vue"
-import PanicSummaryCard from "@/components/panic/PanicSummaryCard.vue"
-import jsPDF from "jspdf"
-import html2canvas from "html2canvas"
+import { ref } from 'vue'
+import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas'
 
-const fileText = ref<string>("")
+import DonateSection from '~/components/DonateSection.vue'
+import DropZone from '@/components/panic/DropZone.vue'
+import PanicResult from '@/components/panic/PanicResult.vue'
+import PanicSummaryCard from '@/components/panic/PanicSummaryCard.vue'
+
+const fileText = ref<string>('')
 const result = ref<any>(null)
 const summary = ref<any>(null)
 const loading = ref(false)
 
-async function analyze() {
+async function analyze () {
   if (!fileText.value || fileText.value.trim().length < 5) {
-    alert("Subí un archivo Panic Log válido.")
+    alert('Subí un archivo Panic Log válido.')
     return
   }
 
   loading.value = true
 
   try {
-    const res: any = await $fetch("/api/parse", {
-      method: "POST",
+    const res: any = await $fetch('/api/parse', {
+      method: 'POST',
       body: { text: fileText.value }
     })
 
     if (!res.success) {
-      alert(res.error || "Error analizando el Panic Log.")
+      alert(res.error || 'Error analizando el Panic Log.')
       loading.value = false
       return
     }
@@ -107,25 +110,25 @@ async function analyze() {
     summary.value = res.data.summary
   } catch (err) {
     console.error(err)
-    alert("Error en el servidor al procesar el Panic Log.")
+    alert('Error en el servidor al procesar el Panic Log.')
   } finally {
     loading.value = false
   }
 }
 
-async function exportPDF() {
-  const el = document.getElementById("pdf-area")
-  if (!el) return
+async function exportPDF () {
+  const el = document.getElementById('pdf-area')
+  if (!el) { return }
 
   const canvas = await html2canvas(el)
-  const img = canvas.toDataURL("image/png")
+  const img = canvas.toDataURL('image/png')
 
-  const pdf = new jsPDF("p", "mm", "a4")
+  const pdf = new jsPDF('p', 'mm', 'a4')
   const width = pdf.internal.pageSize.getWidth()
   const height = (canvas.height * width) / canvas.width
 
-  pdf.addImage(img, "PNG", 0, 0, width, height)
-  pdf.save("panic_report.pdf")
+  pdf.addImage(img, 'PNG', 0, 0, width, height)
+  pdf.save('panic_report.pdf')
 }
 </script>
 
