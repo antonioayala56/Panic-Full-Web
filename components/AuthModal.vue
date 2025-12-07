@@ -153,7 +153,7 @@ import { updateProfile, sendPasswordResetEmail, getAuth } from 'firebase/auth'
 
 import { useAuth } from '~/composables/useAuth'
 
-const props = defineProps<{
+const { show } = defineProps<{
   show: boolean
 }>()
 

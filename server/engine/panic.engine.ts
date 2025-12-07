@@ -92,18 +92,24 @@ function groupByCategory (list: PanicEntry[]) {
 
 function extractModelFromPanic (text: string) {
   try {
-    // Buscar todos los bloques JSON en el texto
+    // Buscar el product directamente en el texto usando regex más robusto
+    const productMatch = text.match(/"product"\s*:\s*"([^"]+)"/)
+    if (productMatch) {
+      const product = productMatch[1]
+      // Usar el ProductMap centralizado para mapear product a modelo legible
+      return ProductMap[product] || product.replace('iPhone', 'iPhone ').replace(',', ' ')
+    }
+
+    // Fallback: buscar en bloques JSON
     const jsonBlocks = text.match(/\{[^}]*\}/g)
     if (jsonBlocks) {
       for (const block of jsonBlocks) {
         try {
           const jsonData = JSON.parse(block)
           if (jsonData.product) {
-            // Usar el ProductMap centralizado para mapear product a modelo legible
             return ProductMap[jsonData.product] || jsonData.product.replace('iPhone', 'iPhone ').replace(',', ' ')
           }
         } catch {
-          // Este bloque no es JSON válido, continuar
           continue
         }
       }

@@ -64,18 +64,14 @@ const fileInput = ref<HTMLInputElement | null>(null)
 const showTextarea = ref(false)
 const pastedText = ref('')
 
-// Prevenir drag & drop global
-const preventDefaults = (e: Event) => {
-  e.preventDefault()
-  e.stopPropagation()
-}
+// No global drag & drop prevention needed
 
 onMounted(() => {
-  // Solo prevenir defaults en el div, no globalmente
+  // Setup if needed
 })
 
 onUnmounted(() => {
-  // No remover listeners globales
+  // Cleanup if needed
 })
 
 function openFileDialog () {

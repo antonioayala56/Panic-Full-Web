@@ -49,6 +49,7 @@ async function exportPDF () {
   const canvas = await html2canvas(el)
   const img = canvas.toDataURL('image/png')
 
+  // eslint-disable-next-line new-cap
   const pdf = new jsPDF('p', 'mm', 'a4')
   const width = pdf.internal.pageSize.getWidth()
   const height = (canvas.height * width) / canvas.width

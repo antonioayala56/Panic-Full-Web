@@ -3,9 +3,7 @@
 // Incluye desde iPhone X hasta iPhone 16 Pro Max
 
 export const ProductMap: Record<string, string> = {
-  // --- X / XS / XR ---
-  'iPhone10,3': 'iPhone X',
-  'iPhone10,6': 'iPhone X',
+  // --- XS / XR ---
   'iPhone11,2': 'iPhone XS',
   'iPhone11,4': 'iPhone XS Max',
   'iPhone11,6': 'iPhone XS Max',
