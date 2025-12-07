@@ -18,10 +18,8 @@
         {{ props.modelValue ? 'Archivo cargado ✓' : 'Arrastrá tu Panic Log aquí' }}
       </p>
       <p class="sub-text">
-        {{ props.modelValue ? `Texto de ${props.modelValue.length} caracteres` : 'Archivos soportados: .txt, .log, .ips (máx. 200 líneas)' }}
+        {{ props.modelValue ? `Texto de ${props.modelValue.length} caracteres` : 'Archivos soportados: .txt, .log, .ips (lee hasta 200 líneas)' }}
       </p>
-
-      <p v-if="fileError" class="error-text">{{ fileError }}</p>
 
       <button class="select-btn" @click="openFileDialog">
         {{ props.modelValue ? 'Cambiar archivo' : 'Seleccionar archivo' }}
@@ -39,11 +37,9 @@
       <textarea
         v-model="pastedText"
         class="paste-textarea"
-        placeholder="Pegá el contenido del archivo .txt, .log o .ips aquí... (máx. 200 líneas)"
+        placeholder="Pegá el contenido del archivo .txt, .log o .ips aquí... (lee hasta 200 líneas)"
         @input="onTextInput"
       />
-
-      <p v-if="pastedError" class="error-text">{{ pastedError }}</p>
 
       <div class="paste-buttons">
         <button class="paste-submit-btn" @click="submitPastedText">
@@ -67,8 +63,6 @@ const emit = defineEmits(['update:modelValue'])
 const fileInput = ref<HTMLInputElement | null>(null)
 const showTextarea = ref(false)
 const pastedText = ref('')
-const fileError = ref('')
-const pastedError = ref('')
 
 // No global drag & drop prevention needed
 
@@ -113,12 +107,8 @@ function readFile (file: File) {
   reader.onload = () => {
     const text = reader.result?.toString() || ''
     const lines = text.split('\n')
-    if (lines.length > 200) {
-      fileError.value = 'El archivo excede el límite de 200 líneas. Por favor, sube un archivo más pequeño.'
-    } else {
-      emit('update:modelValue', text)
-      fileError.value = ''
-    }
+    const truncatedText = lines.slice(0, 200).join('\n')
+    emit('update:modelValue', truncatedText)
   }
 
   reader.readAsText(file)
@@ -132,13 +122,9 @@ function onTextInput () {
 function submitPastedText () {
   const text = pastedText.value
   const lines = text.split('\n')
-  if (lines.length > 200) {
-    pastedError.value = 'El texto pegado excede el límite de 200 líneas. Por favor, usa un texto más corto.'
-  } else {
-    emit('update:modelValue', text)
-    pastedError.value = ''
-    showTextarea.value = false
-  }
+  const truncatedText = lines.slice(0, 200).join('\n')
+  emit('update:modelValue', truncatedText)
+  showTextarea.value = false
 }
 
 function cancelPaste () {
@@ -295,12 +281,5 @@ function cancelPaste () {
 
 .paste-cancel-btn:hover {
   background: rgba(255, 255, 255, 0.2);
-}
-
-.error-text {
-  margin-top: 8px;
-  color: #dc2626;
-  font-size: 0.9rem;
-  font-weight: 500;
 }
 </style>
