@@ -57,7 +57,6 @@ const handleNavClick = (item: any) => {
         </a>
       </div>
 
-
       <!-- Mobile menu button -->
       <div class="mobile-menu-button">
         <button type="button" class="menu-button">
@@ -135,26 +134,6 @@ const handleNavClick = (item: any) => {
 
 .menu-icon {
   @apply w-6 h-6;
-}
-
-.auth-section {
-  @apply flex items-center;
-}
-
-.auth-button {
-  @apply px-4 py-2 bg-gradient-to-r from-orange-500 to-red-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all;
-}
-
-.user-menu {
-  @apply flex items-center gap-3;
-}
-
-.user-name {
-  @apply text-white font-medium;
-}
-
-.logout-button {
-  @apply px-3 py-1 text-orange-400 hover:text-orange-300 text-sm font-medium border border-orange-400/30 rounded hover:bg-orange-400/10 transition-colors;
 }
 
 .sr-only {

@@ -1,6 +1,23 @@
 /* assets/css/theme-future.css */
 
+/* Light theme */
 :root {
+  --c-bg: #ffffff;
+  --c-bg-soft: #f8fafc;
+  --c-bg-card: #ffffff;
+
+  --c-primary: #f59e0b;
+  --c-primary-glow: #fbbf24;
+
+  --c-secondary: #ef4444;
+  --c-secondary-glow: #f87171;
+
+  --c-border: #e2e8f0;
+  --c-text: #1e293b;
+}
+
+/* Dark theme */
+.dark {
   --c-bg: #1a0a0a;
   --c-bg-soft: #2a1414;
   --c-bg-card: #3a1a1a;

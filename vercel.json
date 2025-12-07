@@ -1,10 +1,5 @@
 {
-  "builds": [
-    {
-      "src": "nuxt.config.ts",
-      "use": "@nuxtjs/vercel-builder"
-    }
-  ],
+  "framework": "nuxtjs",
   "routes": [
     {
       "src": "/api/(.*)",
