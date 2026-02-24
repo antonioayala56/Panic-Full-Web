@@ -48,20 +48,14 @@ function matchCodes (text: string) {
 
     // Múltiples formas de matching para mejor detección
     const matches = [
-      // Matching exacto
       text.includes(code),
-      // Case insensitive
       lowerText.includes(lowerCode),
-      // Con espacios alrededor
       text.includes(` ${code} `),
       lowerText.includes(` ${lowerCode} `),
-      // Al inicio de línea
       text.includes(`\n${code}`),
       lowerText.includes(`\n${lowerCode}`),
-      // Seguido de dos puntos
       text.includes(`${code}:`),
       lowerText.includes(`${lowerCode}:`),
-      // Para códigos hex, buscar sin 0x también
       code.startsWith('0x') && (
         text.includes(code) ||
         text.includes(code.substring(2)) ||
@@ -92,15 +86,12 @@ function groupByCategory (list: PanicEntry[]) {
 
 function extractModelFromPanic (text: string) {
   try {
-    // Buscar el product directamente en el texto usando regex más robusto
     const productMatch = text.match(/"product"\s*:\s*"([^"]+)"/)
     if (productMatch) {
       const product = productMatch[1]
-      // Usar el ProductMap centralizado para mapear product a modelo legible
       return ProductMap[product] || product.replace('iPhone', 'iPhone ').replace(',', ' ')
     }
 
-    // Fallback: buscar en bloques JSON
     const jsonBlocks = text.match(/\{[^}]*\}/g)
     if (jsonBlocks) {
       for (const block of jsonBlocks) {
@@ -120,50 +111,24 @@ function extractModelFromPanic (text: string) {
   return null
 }
 
-function predictModel (text: string, list: PanicEntry[]) {
-  // Primero intentar extraer modelo del JSON del panic
-  const extractedModel = extractModelFromPanic(text)
-  if (extractedModel) { return extractedModel }
-
-  // Fallback a predicción basada en códigos detectados
-  const all = list.flatMap(l => l.models || [])
-  if (all.length === 0) { return 'Desconocido' }
-
-  const count: Record<string, number> = {}
-
-  for (const m of all) {
-    count[m] = (count[m] || 0) + 1
-  }
-
-  return Object.entries(count)
-    .sort((a, b) => b[1] - a[1])[0][0]
-}
-
 export function analyzePanicLog (text: string) {
+  // 1. Detectar SOLO los códigos que aparecen en el archivo
   const detected = matchCodes(text)
-  const model = predictModel(text, detected)
+  
+  // 2. Extraer modelo para INFO, no para filtrar
+  const model = extractModelFromPanic(text) || 'Desconocido'
 
-  // Filtrar códigos por modelo detectado si hay uno específico
-  const filteredCodes = model && model !== 'Desconocido'
-    ? detected.filter(code => code.models?.some(m =>
-      m.toLowerCase().includes(model.toLowerCase()) ||
-        model.toLowerCase().includes(m.toLowerCase())
-    )).map(code => ({
-      ...code,
-      models: [model] // Solo mostrar el modelo detectado
-    }))
-    : detected
-
-  const grouped = groupByCategory(filteredCodes)
-  const severity = autoSeverity(filteredCodes)
+  // 3. Agrupar TODOS los detectados (sin filtrar por modelo)
+  const grouped = groupByCategory(detected)
+  const severity = autoSeverity(detected)
 
   return {
     summary: {
       severity,
       model,
-      total: filteredCodes.length
+      total: detected.length
     },
     grouped,
-    detected: filteredCodes
+    detected
   }
 }
