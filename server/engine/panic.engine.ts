@@ -1,54 +1,89 @@
-// server/engine/panic.engine.ts - FUNCIÓN CORREGIDA
+// server/engine/panic.engine.ts - VERSIÓN COMPLETA Y CORREGIDA
+import panicDB from '~/server/assets/panic_db.json'
+import { ProductMap } from '~/core/product-map'
+
+export interface PanicEntry {
+  code: string
+  keywords?: string[]
+  component: string
+  models?: string[]
+  severity: string
+  solution: string
+  notes?: string
+  products?: string[]
+  certainty?: number
+  status?: string
+  type?: string
+}
+
+const severityWeight: Record<string, number> = {
+  critical: 4,
+  high: 3,
+  medium: 2,
+  low: 1
+}
+
+function autoSeverity(list: PanicEntry[]) {
+  let max = 0
+  let level: string = 'low'
+
+  for (const c of list) {
+    const w = severityWeight[c.severity] ?? 1
+    if (w > max) {
+      max = w
+      level = c.severity
+    }
+  }
+  return level
+}
 
 // Función para extraer códigos hex específicos del texto (CORREGIDA)
 function extractHexCodes(text: string): string[] {
-  // Solo buscar en la sección relevante del panic (hasta "EOF" o final de sección útil)
+  // Solo buscar en la sección relevante del panic
   const relevantSection = text.split(/EOF|last started kext|loaded kexts:/i)[0] || text
   
-  // Buscar códigos hex que aparecen en contextos de error reales
   const hexPattern = /0x[0-9a-fA-F]{2,8}\b/g
   const matches = relevantSection.match(hexPattern) || []
   
-  // Filtrar duplicados y códigos que son obviamente ejemplos (muy cortos o muy largos)
+  // Filtrar duplicados y códigos muy cortos/largos
   const uniqueCodes = [...new Set(matches)].filter(code => {
-    const len = code.length - 2 // sin el 0x
-    // Ignorar códigos de 1-2 dígitos (probablemente ejemplos) y más de 6 (raro)
+    const len = code.length - 2
     return len >= 3 && len <= 6
   })
   
   return uniqueCodes
 }
 
-// Función mejorada para determinar si un código es "explícito" vs "por keyword"
+// Función para determinar si un código es "explícito" vs "por keyword"
 function isExplicitCode(code: string, text: string): boolean {
   const lowerText = text.toLowerCase()
   const lowerCode = code.toLowerCase()
   
-  // Buscar el código en contextos que sugieren que es el error real, no un ejemplo
   const contexts = [
     `smc error: ${lowerCode}`,
     `sensor array: ${lowerCode}`,
-    `assertion failed: ${lowerCode}`,
+    `assertion failed.*${lowerCode}`,
     `value: ${lowerCode}`,
     `status: ${lowerCode}`,
     `${lowerCode} -`,
     `error ${lowerCode}`,
-    `panic.*${lowerCode}`,
-    `0x[0-9a-f]+.*${lowerCode}` // cerca de otros hex en sección de error
+    `panic.*${lowerCode}`
   ]
   
   return contexts.some(ctx => {
-    const regex = new RegExp(ctx.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i')
-    return regex.test(lowerText)
+    try {
+      const regex = new RegExp(ctx, 'i')
+      return regex.test(lowerText)
+    } catch {
+      return lowerText.includes(ctx.replace(/[.*]/g, ''))
+    }
   })
 }
 
-// Función matchCodes CORREGIDA
 function matchCodes(text: string): PanicEntry[] {
   const found: PanicEntry[] = []
   const lowerText = text.toLowerCase()
   
-  // Extraer solo los hex que son errores reales, no ejemplos
   const relevantHexCodes = extractHexCodes(text)
   
   for (const item of panicDB) {
@@ -58,9 +93,8 @@ function matchCodes(text: string): PanicEntry[] {
     const code = item.code
     const lowerCode = code.toLowerCase()
     
-    // 1. Verificar si es un código hex explícito del error (no ejemplo)
+    // 1. Verificar si es un código hex explícito del error
     if (code.startsWith('0x') && relevantHexCodes.includes(code)) {
-      // Solo marcar como match si aparece en contexto de error real
       if (isExplicitCode(code, text)) {
         matched = true
       }
@@ -74,21 +108,17 @@ function matchCodes(text: string): PanicEntry[] {
         text.includes(` ${code} `),
         lowerText.includes(` ${lowerCode} `),
         text.includes(`${code}:`),
-        lowerText.includes(`${lowerCode}:`),
-        text.includes(`${code}\n`),
-        lowerText.includes(`${lowerCode}\n`)
+        lowerText.includes(`${lowerCode}:`)
       ].some(Boolean)
       
       if (codeMatches) matched = true
     }
     
-    // 3. Buscar en keywords (solo si no hay match previo)
+    // 3. Buscar en keywords
     if (!matched && item.keywords?.length) {
       const keywordMatch = item.keywords.some(keyword => {
         const lowerKeyword = keyword.toLowerCase()
-        // Solo aceptar keywords que no sean subcadenas de otras palabras
-        const regex = new RegExp(`\\b${lowerKeyword}\\b`, 'i')
-        return regex.test(lowerText)
+        return lowerText.includes(lowerKeyword)
       })
       if (keywordMatch) matched = true
     }
@@ -99,4 +129,103 @@ function matchCodes(text: string): PanicEntry[] {
   }
   
   return found
+}
+
+function groupByCategory(list: PanicEntry[]) {
+  const out: Record<string, PanicEntry[]> = {}
+
+  for (const item of list) {
+    const cat = item.component || 'General'
+
+    if (!out[cat]) { out[cat] = [] }
+    out[cat].push(item)
+  }
+
+  return out
+}
+
+function extractModelFromPanic(text: string) {
+  try {
+    const productMatch = text.match(/"product"\s*:\s*"([^"]+)"/)
+    if (productMatch) {
+      const product = productMatch[1]
+      return ProductMap[product] || product.replace('iPhone', 'iPhone ').replace(',', ' ')
+    }
+
+    const jsonBlocks = text.match(/\{[^}]*\}/g)
+    if (jsonBlocks) {
+      for (const block of jsonBlocks) {
+        try {
+          const jsonData = JSON.parse(block)
+          if (jsonData.product) {
+            return ProductMap[jsonData.product] || jsonData.product.replace('iPhone', 'iPhone ').replace(',', ' ')
+          }
+        } catch {
+          continue
+        }
+      }
+    }
+  } catch {
+    // Error general
+  }
+  return null
+}
+
+function extractTextPatterns(text: string): string[] {
+  const patterns = [
+    /missing sensor[s]?\s*:?\s*(\w+)/gi,
+    /(\w+)\s*failed/gi,
+    /(\w+)\s*error/gi,
+    /(\w+)\s*timeout/gi,
+    /(\w+)\s*panic/gi,
+    /assertion failed/gi,
+    /external device/gi,
+    /watchdog timeout/gi
+  ]
+  
+  const matches: string[] = []
+  for (const pattern of patterns) {
+    const found = text.match(pattern)
+    if (found) {
+      matches.push(...found)
+    }
+  }
+  return matches
+}
+
+// FUNCIÓN PRINCIPAL - EXPORTADA
+export function analyzePanicLog(text: string) {
+  const detected = matchCodes(text)
+  const model = extractModelFromPanic(text) || 'Desconocido'
+  const hexCodesFound = extractHexCodes(text)
+  const textPatterns = extractTextPatterns(text)
+  
+  const sortedDetected = detected.sort((a, b) => {
+    const aHex = hexCodesFound.includes(a.code) ? 1 : 0
+    const bHex = hexCodesFound.includes(b.code) ? 1 : 0
+    return bHex - aHex
+  })
+
+  const grouped = groupByCategory(sortedDetected)
+  const severity = autoSeverity(sortedDetected)
+
+  return {
+    summary: {
+      severity,
+      model,
+      total: sortedDetected.length,
+      hexCodesFound: hexCodesFound.length > 0 ? hexCodesFound : null,
+      textPatternsFound: textPatterns.length > 0 ? textPatterns : null,
+      confidence: sortedDetected.length > 0 
+        ? Math.round(sortedDetected.reduce((acc, item) => acc + (item.certainty || 50), 0) / sortedDetected.length)
+        : 0
+    },
+    grouped,
+    detected: sortedDetected,
+    metadata: {
+      hexCodes: hexCodesFound,
+      patterns: textPatterns,
+      analysisDate: new Date().toISOString()
+    }
+  }
 }
