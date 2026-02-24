@@ -1,3 +1,4 @@
+<!-- pages/index.vue - ACTUALIZADO -->
 <template>
   <!-- Matrix Rain Background -->
   <div class="matrix-rain">
@@ -15,7 +16,7 @@
 
     <p class="text-gray-400 max-w-2xl mx-auto text-lg mb-10">
       Analizador profesional de Panic Logs para técnicos avanzados.
-      Compatible desde iPhone XS hasta 16 Pro Max.
+      Compatible desde iPhone XS hasta <span class="text-cyan-400">17 Pro Max</span>.
     </p>
 
     <!-- Línea descriptiva -->
@@ -39,15 +40,21 @@
     <div class="btn-area">
       <button
         class="analyze-btn"
-        :disabled="loading"
+        :disabled="loading || !fileText.trim()"
         @click="analyze"
       >
         {{ loading ? "Analizando..." : "Analizar Panic Log" }}
       </button>
     </div>
 
-    <!-- RESULTADOS -->
-    <div v-if="result" class="results">
+    <!-- ESTADOS DE CARGA/ERROR -->
+    <div v-if="loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Analizando patrones de error...</p>
+    </div>
+
+    <!-- RESULTADOS MEJORADOS -->
+    <div v-if="result && !loading" class="results">
       <div class="flex justify-between items-center mb-6">
         <h3 class="text-2xl font-bold text-white">
           Resultados del análisis
@@ -60,10 +67,57 @@
         </button>
       </div>
 
+      <!-- NUEVO: Metadata del análisis -->
+      <div v-if="metadata" class="metadata-card">
+        <div class="metadata-header">
+          <span class="metadata-title">🔍 Detalles del análisis</span>
+          <span class="confidence-badge" :class="confidenceLevel">
+            Confianza: {{ summary?.confidence || 0 }}%
+          </span>
+        </div>
+        
+        <div class="metadata-grid">
+          <div v-if="metadata.hexCodes?.length" class="metadata-item">
+            <span class="metadata-label">Códigos hex encontrados:</span>
+            <div class="code-tags">
+              <span v-for="code in metadata.hexCodes" :key="code" class="code-tag hex">
+                {{ code }}
+              </span>
+            </div>
+          </div>
+          
+          <div v-if="metadata.patterns?.length" class="metadata-item">
+            <span class="metadata-label">Patrones detectados:</span>
+            <div class="code-tags">
+              <span v-for="pattern in metadata.patterns.slice(0, 3)" :key="pattern" class="code-tag pattern">
+                {{ pattern }}
+              </span>
+            </div>
+          </div>
+          
+          <div v-if="!metadata.hexCodes?.length && !metadata.patterns?.length" class="metadata-item warning">
+            <span class="warning-icon">⚠️</span>
+            <span>No se detectaron códigos hex explícitos. Resultados basados en análisis de texto.</span>
+          </div>
+        </div>
+      </div>
+
       <div id="pdf-area">
         <PanicSummaryCard :summary="summary" />
-        <PanicResult :grouped="result" />
+        <PanicResult 
+          :grouped="result" 
+          :detected="detected"
+          :hex-codes="metadata?.hexCodes || []"
+        />
       </div>
+    </div>
+
+    <!-- NUEVO: Estado vacío cuando no hay resultados -->
+    <div v-if="result && Object.keys(result).length === 0 && !loading" class="no-results">
+      <div class="no-results-icon">🔍</div>
+      <h4>No se detectaron errores conocidos</h4>
+      <p>Este Panic Log no contiene patrones reconocidos en nuestra base de datos.</p>
+      <p class="text-sm text-gray-400 mt-2">Sugerencia: Verifica que el archivo sea un Panic Log válido de iPhone.</p>
     </div>
   </div>
 
@@ -72,7 +126,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
 
@@ -84,7 +138,17 @@ import PanicSummaryCard from '@/components/panic/PanicSummaryCard.vue'
 const fileText = ref<string>('')
 const result = ref<any>(null)
 const summary = ref<any>(null)
+const detected = ref<any[]>([]) // NUEVO: array de errores detectados individuales
+const metadata = ref<any>(null) // NUEVO: metadata del análisis
 const loading = ref(false)
+
+// NUEVO: Computed para nivel de confianza visual
+const confidenceLevel = computed(() => {
+  const conf = summary.value?.confidence || 0
+  if (conf >= 80) return 'high'
+  if (conf >= 50) return 'medium'
+  return 'low'
+})
 
 async function analyze () {
   if (!fileText.value || fileText.value.trim().length < 5) {
@@ -93,6 +157,7 @@ async function analyze () {
   }
 
   loading.value = true
+  result.value = null // Limpiar resultados previos
 
   try {
     const res: any = await $fetch('/api/parse', {
@@ -106,8 +171,12 @@ async function analyze () {
       return
     }
 
+    // NUEVO: Guardar todos los datos del nuevo motor
     result.value = res.data.grouped
     summary.value = res.data.summary
+    detected.value = res.data.detected || [] // Array completo de errores
+    metadata.value = res.data.metadata || null // Metadata con hexCodes y patterns
+    
   } catch (err) {
     console.error(err)
     alert('Error en el servidor al procesar el Panic Log.')
@@ -120,133 +189,177 @@ async function exportPDF () {
   const el = document.getElementById('pdf-area')
   if (!el) { return }
 
-  const canvas = await html2canvas(el)
-  const img = canvas.toDataURL('image/png')
+  try {
+    const canvas = await html2canvas(el, { scale: 2 })
+    const img = canvas.toDataURL('image/png')
 
-  // eslint-disable-next-line new-cap
-  const pdf = new jsPDF('p', 'mm', 'a4')
-  const width = pdf.internal.pageSize.getWidth()
-  const height = (canvas.height * width) / canvas.width
+    // eslint-disable-next-line new-cap
+    const pdf = new jsPDF('p', 'mm', 'a4')
+    const width = pdf.internal.pageSize.getWidth()
+    const height = (canvas.height * width) / canvas.width
 
-  pdf.addImage(img, 'PNG', 0, 0, width, height)
-  pdf.save('panic_report.pdf')
+    pdf.addImage(img, 'PNG', 0, 0, width, height)
+    pdf.save(`panic_report_${new Date().toISOString().split('T')[0]}.pdf`)
+  } catch (err) {
+    console.error('Error exportando PDF:', err)
+    alert('Error al generar PDF')
+  }
 }
 </script>
 
 <style scoped>
-.analyze-section {
-  max-width: 1100px;
-  margin: auto;
-  padding: 2rem;
-  color: white;
-}
+/* ... estilos existentes ... */
 
-.analyze-title {
-  font-size: 2.6rem;
-  font-weight: 700;
-  margin-bottom: 2rem;
+/* NUEVOS ESTILOS */
+
+.loading-state {
   text-align: center;
-  text-shadow: 0 0 15px rgba(255,165,0,0.4);
+  padding: 3rem;
+  color: var(--c-primary);
 }
 
-.btn-area {
-  margin-top: 1.5rem;
-  display: flex;
-  justify-content: center;
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255,255,255,0.1);
+  border-top-color: var(--c-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
 }
 
-.analyze-btn {
-  background: linear-gradient(90deg, var(--c-primary), var(--c-secondary));
-  padding: 12px 28px;
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.metadata-card {
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
   border-radius: 12px;
-  font-size: 1.1rem;
-  border: none;
-  cursor: pointer;
-  color: white;
-  transition: 0.2s;
-  box-shadow: 0 0 12px var(--c-primary-glow);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
 }
 
-.analyze-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 16px var(--c-primary-glow);
+.metadata-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-.analyze-btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
+.metadata-title {
+  font-weight: 600;
+  color: var(--c-primary);
 }
 
-.results {
-  margin-top: 3rem;
+.confidence-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.confidence-badge.high {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+}
+
+.confidence-badge.medium {
+  background: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+}
+
+.confidence-badge.low {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.metadata-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.metadata-item {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 0.5rem;
 }
 
-.export-btn {
-  background: linear-gradient(90deg, #10b981, #059669);
-  padding: 10px 20px;
-  border-radius: 10px;
+.metadata-item.warning {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.75rem;
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
+  padding: 0.75rem;
+  border-radius: 8px;
+}
+
+.metadata-label {
   font-size: 0.9rem;
-  border: none;
-  cursor: pointer;
-  color: white;
-  transition: 0.2s;
-  box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+  color: rgba(255,255,255,0.6);
 }
 
-.export-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
+.code-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
-.hero-line {
-  @apply text-center text-gray-300 text-lg font-medium;
-}
-
-.hero-icon {
-  @apply mr-2;
-}
-
-.glow-text {
-  text-shadow: 0 0 10px var(--c-primary-glow), 0 0 20px var(--c-primary);
-}
-
-/* Matrix Rain Effect */
-.matrix-rain {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  overflow: hidden;
-}
-
-.matrix-column {
-  position: absolute;
-  top: -100%;
-  width: 10px;
-  animation: matrix-fall 10s linear infinite;
-}
-
-.matrix-char {
-  color: var(--c-primary);
+.code-tag {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
   font-family: 'Courier New', monospace;
-  font-size: 14px;
-  opacity: 0.6;
-  animation: matrix-fade 2s ease-in-out infinite;
 }
 
-@keyframes matrix-fall {
-  0% { top: -100%; }
-  100% { top: 200vh; }
+.code-tag.hex {
+  background: rgba(6, 182, 212, 0.2);
+  color: #22d3ee;
+  border: 1px solid rgba(6, 182, 212, 0.3);
 }
 
-@keyframes matrix-fade {
-  0%, 100% { opacity: 0.1; }
-  50% { opacity: 0.8; }
+.code-tag.pattern {
+  background: rgba(168, 85, 247, 0.2);
+  color: #c084fc;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.no-results {
+  text-align: center;
+  padding: 3rem;
+  background: rgba(239, 68, 68, 0.05);
+  border: 1px dashed rgba(239, 68, 68, 0.3);
+  border-radius: 12px;
+  margin-top: 2rem;
+}
+
+.no-results-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.no-results h4 {
+  color: #ef4444;
+  margin-bottom: 0.5rem;
+}
+
+.no-results p {
+  color: rgba(255,255,255,0.6);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .metadata-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .code-tags {
+    gap: 0.25rem;
+  }
 }
 </style>
